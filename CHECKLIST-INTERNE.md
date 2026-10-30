@@ -1,7 +1,9 @@
 # FBA Consulting Group — checklist interne (ne pas publier)
 
 ## À faire approuver par Fatoumata Ba
-- [ ] Chiffres LinkedIn : +80 000 abonnés, +28 millions d'impressions cumulées (vérifier dans les statistiques LinkedIn). Mettre `stats.confirmed` à true après vérification.
+- [x] Abonnés LinkedIn : profil affiché à 83 214 abonnés le 30/10/2026 → le site indique « +83 000 ».
+- [ ] +28 millions d'impressions cumulées : à vérifier dans les statistiques LinkedIn (non visible sur le profil).
+- [ ] Ne pas publier « Top 1 % Sénégal » / « Top 3 Sénégal » (deux classements différents sur son profil et sa bannière, non vérifiables).
 - [ ] Autorisation écrite de chaque client (nom + logo) : N2M SÉCURITÉ, NVI FACILITY, DPM CONSULTING SENEGAL, N2M ELECTRONICS, PRO Ingénierie TECH. Rien n'est publié tant que `authorized` = false dans `src/clients.json`.
 - [ ] Logos originaux des 5 clients (fichiers non modifiés) → `src/img/clients/`.
 - [ ] Les 6 catégories de clients et les formulations « Pourquoi FBA ».
