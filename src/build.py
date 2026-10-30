@@ -275,7 +275,7 @@ def talents_spotlight():
 def founder_story(full=False):
     rk = f' En {e(RK["asof"])}, le classement {e(RK["source"])} la place au <strong>n°&nbsp;{RK["rank"]}</strong> des {e(RK["scope"][0].lower() + RK["scope"][1:])}.' if RK.get("enabled") else ""
     bio = "".join(f"<p>{e(x)}</p>" for x in S.get("founder_bio", []))
-    if not bio: bio = placeholder_note("Brouillon interne : parcours détaillé (formation, expériences, dates clés) à fournir et valider par Fatoumata Ba (src/site.json → founder_bio).")
+    if not bio and not S.get("founder_parcours"): bio = placeholder_note("Brouillon interne : parcours détaillé à fournir et valider par Fatoumata Ba (src/site.json → founder_parcours).")
     facts = [("Audience", f"+{fr(ST['followers'])} abonnés LinkedIn", f"relevé le {ST['followers_asof']}")]
     if ST.get("impressions_verified"): facts.append(("Portée", f"+{ST['impressions_display']} d’impressions", f"{ST['impressions_period']} · {ST['impressions_asof']} · +{ST['impressions_growth_pct']} %"))
     if RK.get("enabled"): facts.append(("Reconnaissance", f"N° {RK['rank']} · {RK['source']}", RK["asof"]))
@@ -285,10 +285,21 @@ def founder_story(full=False):
     more = "" if full else f'<a class="textlink" href="a-propos.html">Découvrir son parcours {ic("arrow")}</a>'
     return f'''<section class="band founder" id="fondatrice"><div class="wrap founder-in"><figure class="founder-fig reveal"><picture><source media="(max-width:640px)" srcset="img/fatoumata-ba-about-480.webp"><img src="img/fatoumata-ba-about-900.webp" width="900" height="1205" alt="Fatoumata Ba, fondatrice de FBA Consulting Group" loading="lazy" decoding="async"></picture><figcaption>Fatoumata Ba · Fondatrice</figcaption></figure>
 <div class="founder-copy reveal"><p class="eyebrow">La fondatrice</p><h2>Fatoumata Ba</h2>
-<p class="lede">Créatrice de contenu sur LinkedIn et professionnelle de la communication, Fatoumata Ba a fondé FBA Consulting Group pour mettre sa voix et son audience au service des entreprises, des entrepreneurs et des talents.</p>
+<p class="lede">Créatrice de contenu sur LinkedIn, formée à la logistique et au commerce digital, Fatoumata Ba a fondé FBA Consulting Group pour mettre sa voix et son audience au service des entreprises, des entrepreneurs et des talents.</p>
 <p>Sur LinkedIn, elle fédère une communauté de plus de {fr(ST["followers"])} abonnés.{rk}</p>
 <p>Sa mission : aider chacun à gagner en visibilité, à renforcer son image professionnelle et à ouvrir de nouvelles opportunités.</p>{bio if full or not S.get("founder_bio") else ""}
 <dl class="facts">{fh}</dl><p class="links">{more}{li}</p></div></div></section>'''
+
+def parcours():
+    P = S.get("founder_parcours")
+    if not P: return ""
+    def col(title, icn, items):
+        li = "".join(f'''<li class="pc-item reveal"><p class="pc-d">{e(x["dates"])}</p><h4>{e(x["title"])}</h4><p class="pc-o">{e(x["org"])}</p>{f'<p class="pc-x">{e(x["detail"])}</p>' if x.get("detail") else ""}</li>''' for x in items)
+        return f'<div class="pc-col"><h3 class="pc-h"><span class="offer-ic">{ic(icn)}</span>{e(title)}</h3><ol class="pc-list">{li}</ol></div>'
+    sk = "".join(f"<li>{e(x)}</li>" for x in P.get("skills", []))
+    return f'''<section class="band band--ivory parcours" id="parcours"><div class="wrap">{shead("Parcours", "Un parcours entre logistique, commerce digital et communication.", "Expériences, formations et certifications de Fatoumata Ba.")}
+<div class="pc-grid">{col("Expériences", "brief", P["experience"])}<div class="pc-side">{col("Formation", "doc", P["education"])}{col("Certifications", "star", P["certifications"])}</div></div>
+{f'<div class="pc-skills reveal"><p class="kpi-k">Compétences</p><ul>{sk}</ul></div>' if sk else ""}<p class="m-src reveal">Source : {e(P["source"])}.</p></div></section>'''
 
 AUDIENCES = [
  ("Entreprises en quête de visibilité", "Demander un devis", "contact.html#demande"),
@@ -318,7 +329,7 @@ def home():
     return f'''{hero()}{metrics()}{benefits_for()}{pillars()}{clients_section()}{testimonials()}{influence()}{emploi_band()}{talents_spotlight()}{founder_story()}{tblk}{cta_block()}'''
 
 def about():
-    return head("À propos", "Une voix, une audience, une mission.", "FBA Consulting Group aide les entreprises, les entrepreneurs et les professionnels à gagner en visibilité, à renforcer leur image et à promouvoir leurs projets.") + founder_story(full=True) + metrics() + f'''
+    return head("À propos", "Une voix, une audience, une mission.", "FBA Consulting Group aide les entreprises, les entrepreneurs et les professionnels à gagner en visibilité, à renforcer leur image et à promouvoir leurs projets.") + founder_story(full=True) + parcours() + metrics() + f'''
 <section class="band band--sand"><div class="wrap two-c"><div class="reveal"><p class="eyebrow">Notre mission</p><h2>Rendre visibles celles et ceux qui ont quelque chose à apporter.</h2></div><div class="reveal"><p class="lede">FBA Consulting Group aide les entreprises, les entrepreneurs et les professionnels à gagner en visibilité, à renforcer leur image professionnelle, à promouvoir leurs projets et à développer de nouvelles opportunités.</p><p>Basée à {e(S["city"])}, l’agence accompagne ses clients sur LinkedIn à travers sept services, regroupés en trois expertises : entreprises et entrepreneurs, emploi et talents, personal branding et influence.</p><a class="textlink" href="services.html">Voir nos services {ic("arrow")}</a></div></div></section>
 {cta_block()}'''
 

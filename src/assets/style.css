@@ -433,3 +433,18 @@ body.nav-open .wa-float{opacity:0;pointer-events:none}
 @media(max-width:359px){.tiles{gap:10px}.tile{padding:22px 10px 12px}.tile-logo img{max-height:58px}}
 .clients{padding-bottom:clamp(36px,5vw,64px)}.clients .more{margin-top:22px}
 .clients+.testis{padding-top:clamp(28px,4vw,56px);border-top:1px solid var(--line)}
+
+/* ===== Parcours (À propos) ===== */
+.pc-grid{display:grid;gap:28px}
+.pc-side{display:grid;gap:28px;align-content:start}
+.pc-h{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 18px}.pc-h .offer-ic{margin:0;width:40px;height:40px}
+.pc-list{list-style:none;margin:0;padding:0 0 0 20px;border-left:1px solid rgba(201,169,110,.55);display:grid;gap:18px}
+.pc-item{position:relative}.pc-item::before{content:"";position:absolute;left:-25px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px var(--ivory)}
+.pc-d{margin:0 0 4px;font:600 .7rem/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-d)}
+.pc-item h4{margin:0 0 2px;font:600 1.05rem/1.35 var(--serif);color:var(--navy)}
+.pc-o{margin:0;font-weight:500;color:var(--text);font-size:.95rem}.pc-x{margin:2px 0 0;font-size:.88rem;color:var(--mute)}
+.pc-skills{margin-top:34px;padding-top:22px;border-top:1px solid var(--line)}.pc-skills .kpi-k{color:var(--gold-d)}
+.pc-skills ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.pc-skills li{padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--navy);font-size:.88rem;font-weight:500}
+.parcours>.wrap>.m-src{margin-top:20px}
+@media(min-width:900px){.pc-grid{grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,80px)}}

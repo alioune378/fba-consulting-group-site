@@ -43,5 +43,87 @@
   },
   "preview_url": "https://fba-consulting-group-site.netlify.app",
   "draft_placeholders": true,
-  "founder_bio": []
+  "founder_bio": [],
+  "founder_parcours": {
+    "source": "Profil LinkedIn de Fatoumata Ba, consulté le 30 octobre 2026",
+    "experience": [
+      {
+        "title": "Collaboratrice externe",
+        "org": "HOUSE-MATIC",
+        "dates": "Depuis janv. 2026",
+        "detail": "Indépendante · à distance"
+      },
+      {
+        "title": "Responsable commerciale",
+        "org": "LE BRIEF",
+        "dates": "Juin – juil. 2025",
+        "detail": "Temps partiel · à distance"
+      },
+      {
+        "title": "Assistante de direction",
+        "org": "CEFAE Sénégal",
+        "dates": "Janv. – juin 2025",
+        "detail": "Temps partiel · région de Thiès"
+      },
+      {
+        "title": "Enquêtrice",
+        "org": "Ministère de la Santé et de l’Action sociale",
+        "dates": "Août – oct. 2024",
+        "detail": "Enquête STEPS sur les maladies non transmissibles"
+      },
+      {
+        "title": "Gestionnaire des flux de transport",
+        "org": "CFS – Chemin de Fer du Sénégal",
+        "dates": "",
+        "detail": ""
+      }
+    ],
+    "education": [
+      {
+        "title": "Diplôme d’études supérieures professionnelles, Transport logistique ferroviaire",
+        "org": "ISEP de Thiès",
+        "dates": "2022 – 2024",
+        "detail": "Mention assez bien"
+      },
+      {
+        "title": "Certificat, Commerce digital, informatique et internet, traitement des données",
+        "org": "FORCE-N Sénégal",
+        "dates": "2024",
+        "detail": ""
+      },
+      {
+        "title": "Certificat, Les fondamentaux de la gestion de projet",
+        "org": "DisasterReady",
+        "dates": "2024",
+        "detail": ""
+      },
+      {
+        "title": "Baccalauréat général",
+        "org": "Lycée Ahmadou Ndack Seck",
+        "dates": "2017 – 2021",
+        "detail": ""
+      }
+    ],
+    "certifications": [
+      {
+        "title": "I&T Seminars 2026",
+        "org": "Nestlé",
+        "dates": "Juin 2026",
+        "detail": ""
+      },
+      {
+        "title": "Certificat d’appréciation",
+        "org": "Volontaires des Nations Unies",
+        "dates": "Janv. 2026",
+        "detail": ""
+      }
+    ],
+    "skills": [
+      "Gestion des réseaux sociaux",
+      "Traitement des données",
+      "Commerce digital",
+      "Planification des transports",
+      "Sécurité ferroviaire"
+    ]
+  }
 }

@@ -47,3 +47,7 @@
 - [ ] 3 témoignages publiés en version anonyme (noms et entreprise masqués). Obtenir l'accord des auteurs pour afficher leur nom (`identity_authorized`).
 - [ ] Témoignage entreprise : seule la fin du message figure sur la capture. Fournir la capture complète (début du message) pour pouvoir citer la partie sur les candidats.
 - [ ] Captures originales non anonymisées : ne pas les publier.
+
+## Parcours de la fondatrice (ajouté le 30/10/2026)
+- [x] Parcours publié sur « À propos » d'après les captures de son profil LinkedIn (`founder_parcours` dans `src/site.json`).
+- [ ] Fatoumata relit et valide : intitulés, dates (CFS sans dates : à compléter), et l'accroche « formée à la logistique et au commerce digital » qui remplace « professionnelle de la communication ».
