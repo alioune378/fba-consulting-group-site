@@ -113,18 +113,46 @@ def cta_block():
 <div class="cta-actions"><a class="btn btn--gold btn--lg" href="contact.html#rendez-vous">{ic("cal")} Prendre rendez-vous</a><div class="cta-sec"><a class="btn btn--ghost" href="contact.html#demande">Demander un devis</a><a class="btn btn--ghost" href="{e(WA)}" target="_blank" rel="noopener">{ic("wa")} WhatsApp</a></div></div></div></section>'''
 
 # ---------- audience / metrics (only verified, always attributed) ----------
+def proof_dialog():
+    if not (ST.get("impressions_verified") and ST.get("impressions_proof")): return ""
+    return f'''<dialog class="proof-dlg" id="preuve-linkedin" aria-labelledby="preuve-t"><div class="proof-dlg-in"><div class="proof-dlg-h"><p id="preuve-t">Statistiques LinkedIn · {e(ST["impressions_period"])} · {e(ST["impressions_asof"])}</p><button type="button" class="proof-close" data-close aria-label="Fermer">{ic("close")}</button></div>
+<img src="{e(ST["impressions_proof"])}" width="1290" height="1822" alt="Capture des statistiques LinkedIn de Fatoumata Ba : {fr(ST["impressions"])} impressions sur 365 jours, +{ST["impressions_growth_pct"]} % par rapport aux 365 jours précédents." loading="lazy" decoding="async"><p class="m-src">{e(ST["impressions_source"])}. Capture originale, recadrée uniquement pour retirer les bandes noires.</p></div></dialog>'''
+
 def metrics(cls=""):
-    items = []
+    kpis = []
+    imp = ST.get("impressions_verified")
+    if imp:
+        kpis.append(f'''<div class="kpi kpi--lead reveal"><p class="kpi-k">Impressions · {e(ST["impressions_period"])}</p><p class="kpi-v"><span data-count="29" data-prefix="+" data-suffix=" M">+29 M</span></p><p class="kpi-l">Plus de {e(ST["impressions_display"])} d’impressions sur LinkedIn en {e(ST["impressions_period"])}</p>
+<p class="kpi-g">{ic("arrow","up")}<b>+{ST["impressions_growth_pct"]}&nbsp;%</b> d’impressions par rapport à la période précédente</p><p class="m-src">{fr(ST["impressions"])} impressions · {e(ST["impressions_asof"])}</p></div>''')
     if ST.get("followers_verified"):
-        items.append(f'<div class="metric reveal"><p class="m-val"><span data-count="{ST["followers"]}" data-prefix="+">+{fr(ST["followers"])}</span></p><p class="m-lab">abonnés LinkedIn</p><p class="m-src">{e(ST["followers_source"])} · relevé le {e(ST["followers_asof"])} ({fr(ST["followers_exact"])} abonnés)</p></div>')
+        kpis.append(f'<div class="kpi reveal"><p class="kpi-k">Communauté</p><p class="kpi-v"><span data-count="{ST["followers"]}" data-prefix="+">+{fr(ST["followers"])}</span></p><p class="kpi-l">abonnés LinkedIn</p><p class="m-src">{e(ST["followers_source"])} · relevé le {e(ST["followers_asof"])}</p></div>')
     if RK.get("enabled"):
-        items.append(f'<div class="metric reveal"><p class="m-val">N°&nbsp;{RK["rank"]}</p><p class="m-lab">{e(RK["scope"])}</p><p class="m-src">Classement {e(RK["source"])} · {e(RK["asof"])}</p></div>')
-    if ST.get("impressions_verified"):
-        items.append(f'<div class="metric reveal"><p class="m-val"><span data-count="{ST["impressions_millions"]}" data-prefix="+" data-suffix=" M">+{ST["impressions_millions"]} M</span></p><p class="m-lab">impressions cumulées</p><p class="m-src">Statistiques LinkedIn · {e(ST.get("impressions_asof",""))}</p></div>')
-    if not items: return ""
+        kpis.append(f'<div class="kpi reveal"><p class="kpi-k">Reconnaissance</p><p class="kpi-v">N°&nbsp;{RK["rank"]}</p><p class="kpi-l">{e(RK["scope"])}</p><p class="m-src">Classement {e(RK["source"])} · {e(RK["asof"])}</p></div>')
+    if not kpis: return ""
+    growth = ""
+    if imp:
+        g = ST["impressions_growth_pct"]; prev = round(100 / (100 + g) * 100, 1)
+        growth = f'''<div class="growth reveal" role="img" aria-label="Croissance des impressions : +{g} % par rapport aux 365 jours précédents"><p class="kpi-k">Croissance des impressions</p>
+<div class="gbar"><span class="gbar-l">365 jours précédents</span><span class="gbar-t"><span class="gbar-f gbar-f--prev" style="--w:{prev}%"></span></span></div>
+<div class="gbar"><span class="gbar-l">365 derniers jours</span><span class="gbar-t"><span class="gbar-f" style="--w:100%"></span></span><b>+{g}&nbsp;%</b></div>
+<p class="m-src">Proportions calculées à partir de la croissance affichée par LinkedIn. Aucune donnée mensuelle n’est reconstituée.</p></div>'''
+    proof = f'''<figure class="proof reveal"><a class="proof-shot" href="{e(ST["impressions_proof"])}" target="_blank" rel="noopener" data-dialog="preuve-linkedin" aria-label="Voir la capture des statistiques LinkedIn en grand"><img src="{e(ST["impressions_proof_small"])}" width="720" height="1017" alt="Capture des statistiques LinkedIn : {fr(ST["impressions"])} impressions en 365 jours, +{ST["impressions_growth_pct"]} %" loading="lazy" decoding="async"></a>
+<figcaption><span>Capture originale · LinkedIn</span><a class="textlink" href="{e(ST["impressions_proof"])}" target="_blank" rel="noopener" data-dialog="preuve-linkedin">Voir les statistiques {ic("arrow")}</a></figcaption></figure>''' if imp and ST.get("impressions_proof") else ""
     li = f'<a class="textlink" href="{e(LI)}" target="_blank" rel="noopener noreferrer">{ic("in")} Voir le profil LinkedIn {ic("ext")}</a>' if LI else ""
-    return f'''<section class="band band--ivory audience {cls}" id="audience"><div class="wrap aud-in">{shead("L’audience", "Une audience établie, des chiffres vérifiables.", "Chaque chiffre est attribué à sa source et daté. Il est mis à jour à chaque nouveau relevé.")}
-<div class="metrics">{"".join(items)}</div><p class="aud-link reveal">{li}</p></div></section>'''
+    src = f'Source : statistiques LinkedIn communiquées par Fatoumata Ba, période de {e(ST["impressions_period"])} se terminant en {e(ST["impressions_asof"])}.' if imp else ""
+    return f'''<section class="band band--ink dash {cls}" id="audience"><div class="wrap">{shead("L’audience", "Une audience établie, en forte croissance.", "Les chiffres clés de la communauté LinkedIn de Fatoumata Ba, chacun présenté avec sa source.", dark=True)}
+<div class="dash-grid"><div class="dash-main"><div class="kpis">{"".join(kpis)}</div>{growth}</div>{proof}</div>
+<div class="dash-foot reveal"><p class="m-src">{src} Abonnés : {e(ST["followers_source"])}, relevé le {e(ST["followers_asof"])}.{f" Classement : {e(RK['source'])}, {e(RK['asof'])}." if RK.get("enabled") else ""}</p>{li}</div></div></section>{proof_dialog()}'''
+
+BENEFITS_FOR = [
+ ("Entreprises", "brief", ["Présenter vos offres, événements ou recrutements à une large audience professionnelle.", "Associer votre marque à une voix reconnue sur LinkedIn.", "Des publications rédigées et calibrées pour ce réseau."], "Promouvoir mon entreprise", "contact.html?service=" + urllib.parse.quote("Promotion d’entreprise ou de projet") + "#demande"),
+ ("Entrepreneurs", "rocket", ["Faire découvrir un projet, un produit ou un lancement.", "Toucher des clients et partenaires potentiels au-delà de votre réseau.", "Clarifier votre message et votre positionnement."], "Parler de mon projet", "contact.html?service=" + urllib.parse.quote("Promotion de projets entrepreneuriaux") + "#demande"),
+ ("Chercheurs d’emploi", "user", ["Un CV et un profil LinkedIn plus clairs pour les recruteurs.", "Une mise en visibilité auprès d’une communauté professionnelle, avec votre accord écrit.", "Mieux présenter votre parcours en entretien."], "Valoriser mon profil", "emploi-talents.html"),
+]
+def benefits_for():
+    cards = "".join(f'''<li class="bcard reveal"><span class="offer-ic">{ic(i)}</span><h3>{e(t)}</h3><ul>{"".join(f"<li>{ic('check')}<span>{e(x)}</span></li>" for x in items)}</ul><a class="textlink" href="{h}">{e(cta)} {ic("arrow")}</a></li>''' for t, i, items, cta, h in BENEFITS_FOR)
+    return f'''<section class="band band--ivory benefits-for"><div class="wrap">{shead("Ce que cette audience vous apporte", "Une visibilité au service de vos objectifs.", "Chaque accompagnement est construit autour de votre objectif : vendre, lancer, recruter ou être recruté.")}
+<ul class="bcards">{cards}</ul><p class="fine-l reveal">La portée d’une publication varie selon le sujet et le moment. Aucun résultat commercial, entretien ou recrutement n’est garanti.</p></div></section>'''
 
 # ---------- pillars ----------
 PILLARS = [
@@ -216,6 +244,7 @@ def founder_story(full=False):
     bio = "".join(f"<p>{e(x)}</p>" for x in S.get("founder_bio", []))
     if not bio: bio = placeholder_note("Brouillon interne : parcours détaillé (formation, expériences, dates clés) à fournir et valider par Fatoumata Ba (src/site.json → founder_bio).")
     facts = [("Audience", f"+{fr(ST['followers'])} abonnés LinkedIn", f"relevé le {ST['followers_asof']}")]
+    if ST.get("impressions_verified"): facts.append(("Portée", f"+{ST['impressions_display']} d’impressions", f"{ST['impressions_period']} · {ST['impressions_asof']} · +{ST['impressions_growth_pct']} %"))
     if RK.get("enabled"): facts.append(("Reconnaissance", f"N° {RK['rank']} · {RK['source']}", RK["asof"]))
     facts.append(("Ancrage", S["city"], "au service des entreprises et des talents sénégalais"))
     fh = "".join(f'<div class="fact"><dt>{e(a)}</dt><dd><b>{e(b)}</b><small>{e(c)}</small></dd></div>' for a, b, c in facts)
@@ -243,7 +272,7 @@ def hero():
     if RK.get("enabled"): chips.append(f'<span class="chip chip--b"><b>N°&nbsp;{RK["rank"]}</b> {e(RK["source"])} · {e(RK["asof"])}</span>')
     return f'''<section class="hero"><div class="wrap hero-in"><div class="hero-copy"><p class="eyebrow on-dark hero-k">FBA Consulting Group <span aria-hidden="true">·</span> Sénégal</p>
 <h1 class="hero-h"><span>Votre visibilité.</span> <span>Notre influence.</span> <em>De nouvelles opportunités.</em></h1>
-<p class="lede">Stratégie LinkedIn, personal branding et promotion de projets, portés par la communauté de Fatoumata Ba : plus de {fr(ST["followers"])} abonnés sur LinkedIn.</p>
+<p class="lede">Stratégie LinkedIn, personal branding et promotion de projets, portés par la communauté de Fatoumata Ba : plus de {fr(ST["followers"])} abonnés{" et plus de " + ST["impressions_display"] + " d’impressions en " + ST["impressions_period"] if ST.get("impressions_verified") else ""} sur LinkedIn.</p>
 <div class="hero-cta"><a class="btn btn--gold btn--lg" href="contact.html#rendez-vous">{ic("cal")} Prendre rendez-vous</a><a class="btn btn--ghost btn--lg" href="{e(WA)}" target="_blank" rel="noopener">{ic("wa")} WhatsApp</a></div>
 <p class="hero-alt"><a href="contact.html#demande">Demander un devis {ic("arrow")}</a><a href="emploi-talents.html">Vous cherchez un emploi ? {ic("arrow")}</a></p></div>
 <figure class="hero-fig"><div class="portrait"><picture><source media="(max-width:640px)" srcset="img/fatoumata-ba-hero-480.webp"><img src="img/fatoumata-ba-hero-900.webp" width="900" height="1181" alt="Fatoumata Ba, fondatrice de FBA Consulting Group" fetchpriority="high"></picture></div>{"".join(chips)}</figure></div>
@@ -253,13 +282,12 @@ def home():
     aud = "".join(f'<li class="reveal"><a class="aud" href="{h}"><span>{e(t)}</span><b>{e(c)} {ic("arrow")}</b></a></li>' for t, c, h in AUDIENCES)
     testi = [c for c in CLIENTS if c["authorized"] and c.get("testimonial") and c.get("testimonial_author")]
     tblk = f'''<section class="band band--ivory"><div class="wrap">{shead("Témoignages", "Ce que disent nos clients")}<div class="grid g2">{"".join(f'<figure class="quote reveal"><blockquote>“{e(c["testimonial"])}”</blockquote><figcaption>{e(c["testimonial_author"])} · {e(c["name"])}</figcaption></figure>' for c in testi)}</div></div></section>''' if testi else ""
-    return f'''{hero()}{metrics()}{pillars()}{influence()}{clients_section()}{emploi_band()}{talents_spotlight()}{founder_story()}
-<section class="band band--ivory"><div class="wrap">{shead("Pour qui ?", "Un accompagnement pour chaque profil.")}<ul class="auds">{aud}</ul></div></section>{tblk}{cta_block()}'''
+    return f'''{hero()}{metrics()}{benefits_for()}{pillars()}{influence()}{clients_section()}{emploi_band()}{talents_spotlight()}{founder_story()}{tblk}{cta_block()}'''
 
 def about():
-    return head("À propos", "Une voix, une audience, une mission.", "FBA Consulting Group aide les entreprises, les entrepreneurs et les professionnels à gagner en visibilité, à renforcer leur image et à promouvoir leurs projets.") + founder_story(full=True) + f'''
+    return head("À propos", "Une voix, une audience, une mission.", "FBA Consulting Group aide les entreprises, les entrepreneurs et les professionnels à gagner en visibilité, à renforcer leur image et à promouvoir leurs projets.") + founder_story(full=True) + metrics() + f'''
 <section class="band band--sand"><div class="wrap two-c"><div class="reveal"><p class="eyebrow">Notre mission</p><h2>Rendre visibles celles et ceux qui ont quelque chose à apporter.</h2></div><div class="reveal"><p class="lede">FBA Consulting Group aide les entreprises, les entrepreneurs et les professionnels à gagner en visibilité, à renforcer leur image professionnelle, à promouvoir leurs projets et à développer de nouvelles opportunités.</p><p>Basée à {e(S["city"])}, l’agence accompagne ses clients sur LinkedIn à travers sept services, regroupés en trois expertises : entreprises et entrepreneurs, emploi et talents, personal branding et influence.</p><a class="textlink" href="services.html">Voir nos services {ic("arrow")}</a></div></div></section>
-{metrics()}{cta_block()}'''
+{cta_block()}'''
 
 def services():
     blocks = ""
@@ -273,11 +301,11 @@ def services():
 def realisations():
     refs = "".join(client_card(c) for c in CLIENTS if client_visible(c))
     cases = "".join(case_card(c) for c in CASES)
-    body = head("Réalisations & Impact", "Une influence mesurée, des références réelles.", "Audience, publications et références clients de FBA Consulting Group.") + metrics() + influence() + clients_section(link=False)
+    body = head("Réalisations & Impact", "Une influence mesurée, des références réelles.", "Audience, publications et références clients de FBA Consulting Group.") + clients_section(link=False) + metrics()
     if refs: body += f'<section class="band" id="references"><div class="wrap">{shead("Références clients", "Collaborations")}<div class="rlist">{refs}</div></div></section>'
     if cases: body += f'<section class="band" id="etudes"><div class="wrap">{shead("Études de cas", "Projets et résultats")}<div class="cases">{cases}</div></div></section>'
     else: body += f'<section class="band"><div class="wrap narrow center-h reveal"><p class="eyebrow">Études de cas</p><h2>Études de cas à venir</h2><p class="lede">Nous publierons prochainement des projets détaillés, avec l’accord de nos clients. En attendant, parlons du vôtre.</p></div></section>'
-    return body + cta_block()
+    return body + influence() + cta_block()
 
 def opts(items): return "".join(f"<option>{e(i)}</option>" for i in items)
 def common(name): return f'<input type="hidden" name="form-name" value="{name}"><p class="hp" aria-hidden="true"><label>Ne pas remplir <input name="bot-field" tabindex="-1" autocomplete="off"></label></p><input type="hidden" name="t" value="">'
