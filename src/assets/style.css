@@ -405,7 +405,7 @@ body.nav-open .wa-float{opacity:0;pointer-events:none}
 .t-who b{color:var(--text)}.tcard--entreprise .t-who b{color:#fff}
 .t-more{align-self:flex-start;margin:-6px 0 0;padding:6px 0;min-height:36px;border:0;background:none;font:600 .88rem/1 var(--sans);color:var(--navy);cursor:pointer;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px}
 .tcard--entreprise .t-more{color:var(--gold-l)}
-@media(max-width:759px){.tcard.is-clamped blockquote p{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}}
+@media(max-width:759px){.tcard.is-clamped blockquote p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}}
 .t-out{display:flex;gap:12px;align-items:flex-start;margin:0;padding:14px 16px;border-radius:14px;background:linear-gradient(135deg,var(--gold-xl),#fff 85%);border:1px solid rgba(201,169,110,.55)}
 .t-out-ic{flex:none;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--navy);color:var(--gold-l)}
 .t-out-ic .ic{width:16px;height:16px;margin:0;color:inherit}

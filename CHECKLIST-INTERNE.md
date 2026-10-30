@@ -14,7 +14,7 @@
 - [ ] Photos : confirmer l'usage public des portraits.
 
 ## Configuration technique
-- [ ] Déployer sur Netlify ; activer Forms → notifications e-mail (formulaires `demande` et `rendez-vous`).
+- [x] Netlify Forms activé le 30/10/2026. [ ] Activer les notifications e-mail (formulaires `demande` et `rendez-vous`).
 - [ ] Envoyer une demande réelle de chaque formulaire et vérifier la réception.
 - [ ] Tester le lien WhatsApp sur un téléphone avec WhatsApp installé (+221 77 641 78 41).
 - [ ] Option : `booking_url` (Calendly, Cal.com…) pour un vrai agenda.

@@ -198,7 +198,7 @@ def clients_section(link=True):
     if not shown: return ""
     more = f'<p class="more reveal"><a class="textlink" href="realisations.html">Voir les références {ic("arrow")}</a></p>' if link and vis else ""
     note = placeholder_note("Brouillon interne : les noms et logos des clients n’apparaissent qu’après leur autorisation écrite (src/clients.json → authorized).") if len(vis) < len(CLIENTS) else ""
-    return f'''<section class="band band--ivory clients" id="clients"><div class="wrap">{shead("Références", "Ils nous font confiance.", "Des entreprises sénégalaises qui font appel à FBA Consulting Group pour leur visibilité et leur communication.", "center-h")}
+    return f'''<section class="band band--ivory clients" id="clients"><div class="wrap">{shead("Références", "Ils nous font confiance.", "Des entreprises clientes de FBA Consulting Group, présentées avec leur accord.", "center-h")}
 <ul class="tiles reveal" aria-label="Clients de FBA Consulting Group">{"".join(client_tile(c, i+1) for i, c in enumerate(shown))}</ul>{more}{note}</div></section>'''
 
 FIELDS = [("sector", "Secteur"), ("service", "Service fourni"), ("objectives", "Objectifs de la collaboration"), ("work", "Travail réalisé"), ("outcomes", "Résultats vérifiés")]
@@ -333,7 +333,7 @@ def services():
 def realisations():
     refs = "".join(client_card(c) for c in CLIENTS if client_visible(c))
     cases = "".join(case_card(c) for c in CASES)
-    body = head("Réalisations & Impact", "Une influence mesurée, des références réelles.", "Audience, publications et références clients de FBA Consulting Group.") + clients_section(link=False) + testimonials() + metrics()
+    body = head("Réalisations & Impact", "Des collaborations concrètes. Des résultats qui parlent.", "Audience, publications et références clients de FBA Consulting Group.") + clients_section(link=False) + testimonials() + metrics()
     if refs: body += f'<section class="band" id="references"><div class="wrap">{shead("Références clients", "Collaborations")}<div class="rlist">{refs}</div></div></section>'
     if cases: body += f'<section class="band" id="etudes"><div class="wrap">{shead("Études de cas", "Projets et résultats")}<div class="cases">{cases}</div></div></section>'
     else: body += f'<section class="band"><div class="wrap narrow center-h reveal"><p class="eyebrow">Études de cas</p><h2>Études de cas à venir</h2><p class="lede">Nous publierons prochainement des projets détaillés, avec l’accord de nos clients. En attendant, parlons du vôtre.</p></div></section>'
