@@ -129,6 +129,11 @@ def case_card(c):
     return f'<article class="case reveal"><h3>{e(c["title"])}</h3>{f"<p class=muted>{e(c["sector"])}</p>" if c.get("sector") else ""}<dl class="kvs">{sec("objective","Objectif de communication")}{sec("strategy","Stratégie mise en œuvre")}{sec("results","Résultats")}</dl>{f"<div class=cimgs>{imgs}</div>" if imgs else ""}{f"<ul class=clinks>{links}</ul>" if links else ""}</article>'
 
 # ---------- pages ----------
+def stats_band(sid=""):
+    st = S["stats"]; rk = S.get("ranking", {})
+    third = f'<div class="stat reveal"><b><span>N°&nbsp;{rk["rank"]}</span></b><span>{e(rk["scope"])} · classement {e(rk["source"])}, {e(rk["asof"])}</span></div>' if rk.get("enabled") else ""
+    return f'''<section class="band band--navy stats"{f' id="{sid}"' if sid else ""}><div class="wrap"><div class="stat-row{" three" if third else ""}"><div class="stat reveal"><b><span data-count="{st["followers"]}" data-prefix="+">+83 000</span></b><span>Abonnés LinkedIn</span></div><div class="stat reveal"><b><span data-count="{st["impressions_millions"]}" data-prefix="+" data-suffix=" millions">+28 millions</span></b><span>Impressions cumulées sur LinkedIn</span></div>{third}</div></div></section>'''
+
 PILLARS = [
  ("Entreprises & Entrepreneurs", "Promotion d’entreprise, visibilité de projets, publications stratégiques et communication professionnelle.", "pillar-entreprises.webp", "Promouvoir mon entreprise", "contact.html?service=" + urllib.parse.quote("Promotion d’entreprise ou de projet") + "#demande", "Fatoumata Ba, fondatrice de FBA Consulting Group, tenant une tablette"),
  ("Emploi & Talents", "Révision de CV, optimisation du profil LinkedIn, visibilité professionnelle et soutien aux chercheurs d’emploi.", "pillar-emploi.webp", "Valoriser mon profil", "emploi-talents.html", "Fatoumata Ba à son bureau"),
@@ -174,7 +179,7 @@ def home():
 <p class="lede">Stratégie LinkedIn, personal branding et promotion de projets pour les entreprises, les entrepreneurs et les professionnels.</p>
 <div class="cta-stack"><a class="btn btn--lg" href="contact.html#rendez-vous">{ic("cal")} Prendre rendez-vous</a><div class="cta-sec"><a class="btn btn--ghost" href="contact.html#demande">Demander un devis</a><a class="btn btn--ghost btn--wa-o" href="{e(WA)}" target="_blank" rel="noopener">{ic("wa")} WhatsApp</a></div></div></div>
 <figure class="hero-fig"><picture><source media="(max-width:820px)" srcset="img/fatoumata-ba-hero-900.webp"><img src="img/fatoumata-ba-hero-900.webp" width="900" height="1190" alt="Fatoumata Ba, fondatrice de FBA Consulting Group" fetchpriority="high"></picture></figure></div></section>
-<section class="band band--navy stats" id="impact"><div class="wrap"><div class="stat-row"><div class="stat reveal"><b><span data-count="{st["followers"]}" data-prefix="+">+83 000</span></b><span>Abonnés LinkedIn</span></div><div class="stat reveal"><b><span data-count="{st["impressions_millions"]}" data-prefix="+" data-suffix=" millions">+28 millions</span></b><span>Impressions cumulées sur LinkedIn</span></div></div></div></section>
+{stats_band("impact")}
 {clients_section()}
 {pillars()}
 {emploi_band()}
@@ -187,7 +192,7 @@ def home():
 def about():
     return head("À propos", "FBA Consulting Group", "Visibilité, image professionnelle et promotion de projets.") + f'''<section class="band"><div class="wrap two"><div class="reveal"><h2>Notre mission</h2><p class="lede">FBA Consulting Group aide les entreprises, les entrepreneurs et les professionnels à gagner en visibilité, à renforcer leur image professionnelle, à promouvoir leurs projets et à développer de nouvelles opportunités.</p><p>Basée à {e(S["city"])}, FBA Consulting Group accompagne ses clients sur LinkedIn à travers sept services : visibilité, promotion, publications sponsorisées, personal branding, accompagnement des chercheurs d’emploi, valorisation des talents et promotion de projets entrepreneuriaux.</p></div>
 <figure class="reveal"><img src="img/fatoumata-ba-about-900.webp" width="900" height="1190" alt="Fatoumata Ba, fondatrice de FBA Consulting Group" loading="lazy" decoding="async"></figure></div></section>
-<section class="band band--paper"><div class="wrap narrow reveal"><p class="eyebrow">La fondatrice</p><h2>Fatoumata Ba</h2><p class="lede">Fondatrice de FBA Consulting Group, Fatoumata Ba est une voix active sur LinkedIn, où elle fédère une communauté de plus de 83 000 abonnés.</p>{f'<a class="textlink" href="{e(S["social"]["linkedin_founder"])}" target="_blank" rel="noopener noreferrer">Suivre Fatoumata sur LinkedIn {ic("arrow")}</a>' if S["social"]["linkedin_founder"] else ""}</div></section>{cta_block()}'''
+<section class="band band--paper"><div class="wrap narrow reveal"><p class="eyebrow">La fondatrice</p><h2>Fatoumata Ba</h2><p class="lede">Fondatrice de FBA Consulting Group, Fatoumata Ba est une voix active sur LinkedIn, où elle fédère une communauté de plus de 83 000 abonnés.</p>{f'<p>Classée n°&nbsp;{S["ranking"]["rank"]} des {e(S["ranking"]["scope"][0].lower() + S["ranking"]["scope"][1:]).replace("linkedin", "LinkedIn").replace("sénégal", "Sénégal")} selon {e(S["ranking"]["source"])} ({e(S["ranking"]["asof"])}).</p>' if S.get("ranking",{}).get("enabled") else ""}{f'<a class="textlink" href="{e(S["social"]["linkedin_founder"])}" target="_blank" rel="noopener noreferrer">Suivre Fatoumata sur LinkedIn {ic("arrow")}</a>' if S["social"]["linkedin_founder"] else ""}</div></section>{cta_block()}'''
 
 def services():
     cards = "".join(f'<li class="svc svc--lg reveal"><span class="svc-ic">{ic(i)}</span><div><h3>{e(t)}</h3><p>{e(d)}</p><a class="textlink" href="{"emploi-talents.html" if t in JOBSVC else "contact.html?service=" + urllib.parse.quote(t) + "#demande"}">{"Découvrir l’accompagnement emploi" if t in JOBSVC else "Demander ce service"} {ic("arrow")}</a></div></li>' for t, d, i in SERVICES)
@@ -199,7 +204,7 @@ def realisations():
     refs = "".join(client_card(c) for c in CLIENTS if client_visible(c))
     cases = "".join(case_card(c) for c in CASES)
     clients = clients_section(link=False)
-    impact = f'''<section class="band band--navy stats"><div class="wrap"><div class="stat-row"><div class="stat reveal"><b><span data-count="{st["followers"]}" data-prefix="+">+83 000</span></b><span>Abonnés LinkedIn</span></div><div class="stat reveal"><b><span data-count="{st["impressions_millions"]}" data-prefix="+" data-suffix=" millions">+28 millions</span></b><span>Impressions cumulées sur LinkedIn</span></div></div></div></section>'''
+    impact = stats_band()
     body = head("Réalisations & Impact", "Réalisations &amp; Impact", "Références clients et projets de FBA Consulting Group.") + impact + clients
     if refs: body += f'<section class="band" id="references"><div class="wrap"><div class="shead reveal"><p class="eyebrow">Références clients</p><h2>Collaborations</h2></div><div class="rlist">{refs}</div></div></section>'
     if cases: body += f'<section class="band band--paper" id="etudes"><div class="wrap"><div class="shead reveal"><p class="eyebrow">Études de cas</p><h2>Projets et résultats</h2></div><div class="cases">{cases}</div></div></section>'

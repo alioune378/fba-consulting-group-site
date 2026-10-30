@@ -21,5 +21,12 @@
   },
   "whatsapp_display": "+221 77 641 78 41",
   "city": "Thiès, Sénégal",
-  "cv_upload": false
+  "cv_upload": false,
+  "ranking": {
+    "enabled": true,
+    "rank": 2,
+    "source": "Favikon",
+    "scope": "Créateurs LinkedIn au Sénégal",
+    "asof": "octobre 2026"
+  }
 }
