@@ -1,0 +1,5 @@
+dist/
+dist_preview/
+preview/
+__pycache__/
+.DS_Store
