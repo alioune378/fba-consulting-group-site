@@ -170,10 +170,10 @@ def pillars():
 def post_card(p):
     img = f'<img class="post-img" src="{e(p["image"])}" alt="{e(p.get("image_alt",""))}" loading="lazy" decoding="async">' if p.get("image") else ""
     mt = "".join(f'<li><b>{e(m["value"])}</b> {e(m["label"])}</li>' for m in p.get("metrics", [])) if p.get("metrics_verified") else ""
-    mt = f'<ul class="post-metrics">{mt}</ul><p class="m-src">{e(p.get("metrics_source",""))}</p>' if mt else ""
+    mt = f'<ul class="post-metrics" aria-label="{e(p.get("metrics_source",""))}">{mt}</ul><p class="m-src">{e(p.get("metrics_source",""))}</p>' if mt else ""
     note = f'<p class="post-note">{ic("shield","inl")} {e(p["note"])}</p>' if p.get("note") else ""
     return f'''<li class="post reveal"><article><div class="post-top"><span class="post-kind">{e(p.get("kind","Publication"))}</span><span class="post-li">{ic("in")}</span></div>
-<header class="post-h"><img class="post-av" src="img/fatoumata-ba-avatar.webp" width="40" height="40" alt="" loading="lazy"><span><b>Fatoumata Ba</b><small>{f"Publication LinkedIn · {e(p['date'])}" if p.get("date") else "Publication LinkedIn"}</small></span></header>
+<header class="post-h"><img class="post-av" src="img/fatoumata-ba-avatar.webp" width="40" height="40" alt="" loading="lazy"><span><b>Fatoumata Ba</b><small>{f'<time datetime="{e(p["datetime"])}">{e(p["date"])}</time>' if p.get("datetime") else e(p.get("date",""))}</small></span></header>
 <h3>{e(p["title"])}</h3>{f'<p class="post-d">{e(p["excerpt"])}</p>' if p.get("excerpt") else ""}{img}{note}{mt}
 <a class="btn btn--navy post-btn" href="{e(p["url"])}" target="_blank" rel="noopener noreferrer">Voir la publication sur LinkedIn {ic("ext")}<span class="sr-only"> (nouvel onglet)</span></a></article></li>'''
 def influence_metrics():
@@ -184,8 +184,8 @@ def influence_metrics():
 def influence(dark=True):
     if not POSTS: return ""
     cards = "".join(post_card(p) for p in POSTS)
-    return f'''<section class="band band--ink influence" id="influence"><div class="wrap">{shead("Notre influence en action", "Des messages portés auprès d’une audience qui écoute.", "Publications et campagnes réalisées sur LinkedIn par Fatoumata Ba.", dark=True)}
-{influence_metrics()}<ul class="posts" aria-label="Publications LinkedIn">{cards}</ul><p class="posts-hint" aria-hidden="true">Faites glisser pour voir les publications {ic("arrow")}</p>
+    return f'''<section class="band band--ink influence" id="influence"><div class="wrap">{shead("LinkedIn", "Publications et campagnes", "Une sélection de publications de Fatoumata Ba sur LinkedIn, au service de la visibilité des entreprises et des talents.", dark=True)}
+{influence_metrics()}<ul class="posts posts--n{len(POSTS)}" aria-label="Publications LinkedIn">{cards}</ul><p class="posts-hint" aria-hidden="true">Faites glisser pour voir les publications {ic("arrow")}</p>
 <div class="inf-cta reveal"><p>Vous souhaitez donner de la visibilité à votre entreprise ou à vos talents ? <b>Parlons de votre projet.</b></p><div class="cta-sec"><a class="btn btn--gold" href="contact.html#demande">Parlons de votre projet {ic("arrow")}</a><a class="btn btn--ghost" href="{e(WA)}" target="_blank" rel="noopener">{ic("wa")} WhatsApp</a></div></div></div></section>'''
 
 # ---------- clients (data-driven; names/logos only once authorized) ----------
