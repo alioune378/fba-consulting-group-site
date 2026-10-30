@@ -169,5 +169,24 @@
         "cta": "Nos services"
       }
     ]
+  },
+  "influence_metrics": {
+    "approved": false,
+    "source": "Statistiques LinkedIn communiquées par Fatoumata Ba",
+    "asof": "",
+    "items": [
+      {
+        "value": "",
+        "label": "impressions cumulées des publications présentées"
+      },
+      {
+        "value": "",
+        "label": "réactions"
+      },
+      {
+        "value": "",
+        "label": "commentaires"
+      }
+    ]
   }
 }

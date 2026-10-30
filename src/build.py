@@ -166,24 +166,27 @@ def pillars():
 <span class="pillar-body"><span class="pillar-n">{n}</span><span class="pillar-t">{e(t)}</span><span class="pillar-d">{e(d)}</span><span class="pillar-cta">{e(cta)} {ic("arrow")}</span></span></a></li>''' for k, n, t, d, cta, h in PILLARS)
     return f'''<section class="band" id="services"><div class="wrap">{shead("Nos expertises", "Trois leviers pour gagner en visibilité.")}<ul class="pillars">{cards}</ul><p class="more reveal"><a class="textlink" href="services.html">Voir le détail des sept services {ic("arrow")}</a></p></div></section>'''
 
-# ---------- influence in action (real posts only; labelled placeholders in the internal draft) ----------
-PH_POSTS = [("Publication sponsorisée", "Une offre ou un événement présenté à la communauté FBA."), ("Promotion d’entreprise", "La mise en avant d’une entreprise cliente, avec son accord."), ("Visibilité d’un talent", "Un profil valorisé, après validation écrite de la personne.")]
+# ---------- influence in action (real LinkedIn posts from posts.json; no placeholders) ----------
 def post_card(p):
     img = f'<img class="post-img" src="{e(p["image"])}" alt="{e(p.get("image_alt",""))}" loading="lazy" decoding="async">' if p.get("image") else ""
     mt = "".join(f'<li><b>{e(m["value"])}</b> {e(m["label"])}</li>' for m in p.get("metrics", [])) if p.get("metrics_verified") else ""
     mt = f'<ul class="post-metrics">{mt}</ul><p class="m-src">{e(p.get("metrics_source",""))}</p>' if mt else ""
-    return f'''<li class="post reveal"><article><header class="post-h"><img class="post-av" src="img/fatoumata-ba-avatar.webp" width="40" height="40" alt="" loading="lazy"><span><b>Fatoumata Ba</b><small>{e(p.get("date",""))}</small></span><span class="post-kind">{e(p.get("kind","Publication"))}</span></header>
-<h3>{e(p["title"])}</h3>{f'<p>{e(p["excerpt"])}</p>' if p.get("excerpt") else ""}{img}{mt}<a class="textlink" href="{e(p["url"])}" target="_blank" rel="noopener noreferrer">Voir sur LinkedIn {ic("ext")}</a></article></li>'''
-def ph_card(kind, d):
-    return f'''<li class="post post--ph reveal" aria-label="Emplacement réservé : {e(kind)}"><article><header class="post-h"><span class="post-av ph-av"></span><span><b>Fatoumata Ba</b><small>Date de publication</small></span><span class="post-kind">{e(kind)}</span></header>
-<span class="ph-line w90"></span><span class="ph-line w70"></span><span class="ph-img"><span>{e(d)}</span></span><p class="ph-tag">{ic("doc","inl")} Publication authentique à fournir</p></article></li>'''
+    note = f'<p class="post-note">{ic("shield","inl")} {e(p["note"])}</p>' if p.get("note") else ""
+    return f'''<li class="post reveal"><article><div class="post-top"><span class="post-kind">{e(p.get("kind","Publication"))}</span><span class="post-li">{ic("in")}</span></div>
+<header class="post-h"><img class="post-av" src="img/fatoumata-ba-avatar.webp" width="40" height="40" alt="" loading="lazy"><span><b>Fatoumata Ba</b><small>{f"Publication LinkedIn · {e(p['date'])}" if p.get("date") else "Publication LinkedIn"}</small></span></header>
+<h3>{e(p["title"])}</h3>{f'<p class="post-d">{e(p["excerpt"])}</p>' if p.get("excerpt") else ""}{img}{note}{mt}
+<a class="btn btn--navy post-btn" href="{e(p["url"])}" target="_blank" rel="noopener noreferrer">Voir la publication sur LinkedIn {ic("ext")}<span class="sr-only"> (nouvel onglet)</span></a></article></li>'''
+def influence_metrics():
+    M = S.get("influence_metrics", {})
+    if not M.get("approved") or not all(i.get("value") for i in M.get("items", [])): return ""   # hidden until Fatoumata approves the figures
+    li = "".join(f'<li><b>{e(i["value"])}</b><span>{e(i["label"])}</span></li>' for i in M["items"])
+    return f'<div class="inf-metrics reveal"><ul>{li}</ul><p class="m-src">{e(M["source"])}{f", {e(M['asof'])}" if M.get("asof") else ""}.</p></div>'
 def influence(dark=True):
-    if POSTS: cards = "".join(post_card(p) for p in POSTS)
-    elif DRAFT: cards = "".join(ph_card(k, d) for k, d in PH_POSTS)
-    else: return ""
-    note = '' if POSTS else placeholder_note("Brouillon interne : ces cadres seront remplacés par de vraies publications et campagnes LinkedIn (src/posts.json). Ils ne s’affichent pas une fois draft_placeholders désactivé.")
-    return f'''<section class="band band--ink influence" id="influence"><div class="wrap">{shead("Notre influence en action", "Des messages portés auprès d’une audience qui écoute.", "Publications et campagnes réalisées sur LinkedIn, présentées avec l’accord des personnes et entreprises concernées.", dark=True)}
-<ul class="posts" tabindex="0" aria-label="Publications LinkedIn">{cards}</ul>{note}</div></section>'''
+    if not POSTS: return ""
+    cards = "".join(post_card(p) for p in POSTS)
+    return f'''<section class="band band--ink influence" id="influence"><div class="wrap">{shead("Notre influence en action", "Des messages portés auprès d’une audience qui écoute.", "Publications et campagnes réalisées sur LinkedIn par Fatoumata Ba.", dark=True)}
+{influence_metrics()}<ul class="posts" aria-label="Publications LinkedIn">{cards}</ul><p class="posts-hint" aria-hidden="true">Faites glisser pour voir les publications {ic("arrow")}</p>
+<div class="inf-cta reveal"><p>Vous souhaitez donner de la visibilité à votre entreprise ou à vos talents ? <b>Parlons de votre projet.</b></p><div class="cta-sec"><a class="btn btn--gold" href="contact.html#demande">Parlons de votre projet {ic("arrow")}</a><a class="btn btn--ghost" href="{e(WA)}" target="_blank" rel="noopener">{ic("wa")} WhatsApp</a></div></div></div></section>'''
 
 # ---------- clients (data-driven; names/logos only once authorized) ----------
 def client_visible(c): return c["authorized"] or SHOW

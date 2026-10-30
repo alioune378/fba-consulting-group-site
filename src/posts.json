@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "kind": "Promotion d’entreprise",
+    "title": "Une communauté professionnelle à fort impact",
+    "excerpt": "Fatoumata Ba présente le développement de sa communauté LinkedIn et les opportunités de visibilité offertes aux entreprises et aux marques.",
+    "date": "Juin 2026",
+    "url": "https://fr.linkedin.com/posts/fatoumata-ba-19a8821b3_il-y-a-3-mois-nous-%C3%A9tions-%C3%A0-50-000-abonn%C3%A9s-activity-7472233614345187329-4gYZ",
+    "note": "",
+    "image": "", "image_alt": "",
+    "metrics": [], "metrics_verified": false, "metrics_source": ""
+  },
+  {
+    "kind": "Visibilité d’un talent",
+    "title": "Un candidat recommandé, une opportunité concrétisée",
+    "excerpt": "Un candidat recommandé par Fatoumata Ba a été sélectionné pour un poste d’assistant administratif opérationnel.",
+    "date": "Septembre 2026",
+    "url": "https://fr.linkedin.com/posts/fatoumata-ba-19a8821b3_recrutement-emploi-talents-activity-7508127663153201152-0-ME",
+    "note": "",
+    "image": "", "image_alt": "",
+    "metrics": [], "metrics_verified": false, "metrics_source": ""
+  },
+  {
+    "kind": "Opportunités professionnelles",
+    "title": "Des offres d’emploi relayées auprès des talents",
+    "excerpt": "Diffusion d’opportunités professionnelles au Sénégal, notamment pour des postes de conducteur senior et de secrétaire.",
+    "date": "Février 2026",
+    "url": "https://fr.linkedin.com/posts/fatoumata-ba-19a8821b3_linkedin-activity-7432741619336077314-gHu_",
+    "note": "Offres diffusées pour le compte des entreprises qui recrutent. Le recrutement relève de chaque employeur.",
+    "image": "", "image_alt": "",
+    "metrics": [], "metrics_verified": false, "metrics_source": ""
+  }
+]
