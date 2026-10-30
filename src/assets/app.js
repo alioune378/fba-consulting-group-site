@@ -4,11 +4,17 @@ d.documentElement.classList.add('js');
 var y=$('#yr');if(y)y.textContent=new Date().getFullYear();
 /* mobile nav */
 var b=$('.burger'),n=$('#nav');
-if(b&&n){b.addEventListener('click',function(){var o=n.classList.toggle('is-open');b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Fermer le menu':'Ouvrir le menu')});
-d.addEventListener('keydown',function(e){if(e.key==='Escape'&&n.classList.contains('is-open')){n.classList.remove('is-open');b.setAttribute('aria-expanded','false');b.focus()}});
-$$('a',n).forEach(function(a){a.addEventListener('click',function(){n.classList.remove('is-open');b.setAttribute('aria-expanded','false')})})}
+function setNav(o){n.classList.toggle('is-open',o);d.body.classList.toggle('nav-open',o);b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Fermer le menu':'Ouvrir le menu')}
+if(b&&n){b.addEventListener('click',function(){setNav(!n.classList.contains('is-open'))});
+d.addEventListener('keydown',function(e){if(e.key==='Escape'&&n.classList.contains('is-open')){setNav(false);b.focus()}});
+$$('a',n).forEach(function(a){a.addEventListener('click',function(){setNav(false)})});
+matchMedia('(min-width:1061px)').addEventListener('change',function(m){if(m.matches)setNav(false)})}
+/* header shadow once scrolled */
+var hd=$('.header'),hs=function(){hd&&hd.classList.toggle('is-scrolled',scrollY>8)};hs();addEventListener('scroll',hs,{passive:true});
 /* reveal */
 var rv=$$('.reveal'),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* stagger siblings revealed together */
+rv.forEach(function(el){var sib=[].filter.call(el.parentNode.children,function(c){return c.classList.contains('reveal')});var i=sib.indexOf(el);if(i>0)el.style.setProperty('--d',Math.min(i,5)*0.08+'s')});
 if('IntersectionObserver' in window&&!reduce){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});rv.forEach(function(el){io.observe(el)})}else rv.forEach(function(el){el.classList.add('in')});
 setTimeout(function(){rv.forEach(function(el){el.classList.add('in')})},4000);
 /* counters */

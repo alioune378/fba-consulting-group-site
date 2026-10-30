@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Illustration : une prise de parole qui rayonne vers son audience">
+<defs>
+<linearGradient id="bg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#061936"/><stop offset="1" stop-color="#123F7A"/></linearGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F1E3C0"/><stop offset=".6" stop-color="#C9A96E"/><stop offset="1" stop-color="#9C7A3E"/></linearGradient>
+<radialGradient id="core" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#C9A96E" stop-opacity=".45"/><stop offset="1" stop-color="#C9A96E" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="800" height="600" fill="url(#bg)"/>
+<circle cx="300" cy="320" r="230" fill="url(#core)"/>
+<g fill="none" stroke="#E9D7AE">
+<circle cx="300" cy="320" r="96" stroke-opacity=".55" stroke-width="2"/>
+<circle cx="300" cy="320" r="156" stroke-opacity=".32" stroke-width="1.5"/>
+<circle cx="300" cy="320" r="222" stroke-opacity=".18" stroke-width="1.5"/>
+<circle cx="300" cy="320" r="296" stroke-opacity=".09" stroke-width="1.5"/>
+</g>
+<circle cx="300" cy="320" r="58" fill="url(#gold)"/>
+<path d="M276 304c0-10 8-18 18-18v10c-5 0-8 4-8 8h8v20h-18zM306 304c0-10 8-18 18-18v10c-5 0-8 4-8 8h8v20h-18z" fill="#0B2D5B"/>
+<g fill="#FFFFFF">
+<circle cx="404" cy="246" r="9" fill-opacity=".9"/><circle cx="440" cy="368" r="7" fill-opacity=".75"/><circle cx="214" cy="200" r="6" fill-opacity=".6"/>
+<circle cx="508" cy="190" r="6" fill-opacity=".55"/><circle cx="520" cy="420" r="5" fill-opacity=".5"/><circle cx="160" cy="430" r="7" fill-opacity=".55"/>
+<circle cx="584" cy="300" r="5" fill-opacity=".4"/><circle cx="96" cy="300" r="4" fill-opacity=".35"/><circle cx="300" cy="74" r="5" fill-opacity=".35"/>
+</g>
+<g transform="translate(560 120)">
+<rect width="176" height="112" rx="14" fill="#FFFFFF" fill-opacity=".08" stroke="#E9D7AE" stroke-opacity=".35"/>
+<circle cx="30" cy="30" r="12" fill="#E9D7AE" fill-opacity=".8"/><rect x="50" y="22" width="80" height="8" rx="4" fill="#FFFFFF" fill-opacity=".55"/><rect x="50" y="36" width="52" height="6" rx="3" fill="#FFFFFF" fill-opacity=".3"/>
+<rect x="18" y="60" width="140" height="7" rx="3.5" fill="#FFFFFF" fill-opacity=".3"/><rect x="18" y="76" width="112" height="7" rx="3.5" fill="#FFFFFF" fill-opacity=".3"/>
+</g>
+<g transform="translate(600 360)">
+<rect width="150" height="96" rx="14" fill="#FFFFFF" fill-opacity=".06" stroke="#E9D7AE" stroke-opacity=".25"/>
+<circle cx="28" cy="28" r="11" fill="#E9D7AE" fill-opacity=".6"/><rect x="46" y="21" width="70" height="7" rx="3.5" fill="#FFFFFF" fill-opacity=".45"/>
+<rect x="16" y="54" width="118" height="6" rx="3" fill="#FFFFFF" fill-opacity=".25"/><rect x="16" y="68" width="92" height="6" rx="3" fill="#FFFFFF" fill-opacity=".25"/>
+</g>
+<path d="M120 528c60-22 130-22 196 0s140 18 196-8" fill="none" stroke="url(#gold)" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+</svg>

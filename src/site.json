@@ -16,7 +16,12 @@
   },
   "stats": {
     "followers": 83000,
+    "followers_exact": 83214,
+    "followers_source": "Profil LinkedIn de Fatoumata Ba",
+    "followers_asof": "30 octobre 2026",
+    "followers_verified": true,
     "impressions_millions": 28,
+    "impressions_verified": false,
     "confirmed": false
   },
   "whatsapp_display": "+221 77 641 78 41",
@@ -28,5 +33,8 @@
     "source": "Favikon",
     "scope": "Créateurs LinkedIn les plus influents au Sénégal",
     "asof": "octobre 2026"
-  }
+  },
+  "preview_url": "https://fba-consulting-group-site.netlify.app",
+  "draft_placeholders": true,
+  "founder_bio": []
 }

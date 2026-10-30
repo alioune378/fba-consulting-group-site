@@ -2,7 +2,7 @@
 
 ## À faire approuver par Fatoumata Ba
 - [x] Abonnés LinkedIn : profil affiché à 83 214 abonnés le 30/10/2026 → le site indique « +83 000 ».
-- [ ] +28 millions d'impressions cumulées : à vérifier dans les statistiques LinkedIn (non visible sur le profil).
+- [ ] +28 millions d'impressions cumulées : à vérifier dans les statistiques LinkedIn (non visible sur le profil). **Masqué sur le site** tant que `impressions_verified` = false.
 - [ ] Ne pas publier « Top 1 % Sénégal » / « Top 3 Sénégal » (deux classements différents sur son profil et sa bannière, non vérifiables).
 - [ ] Autorisation écrite de chaque client (nom + logo) : N2M SÉCURITÉ, NVI FACILITY, DPM CONSULTING SENEGAL, N2M ELECTRONICS, PRO Ingénierie TECH. Rien n'est publié tant que `authorized` = false dans `src/clients.json`.
 - [ ] Logos originaux des 5 clients (fichiers non modifiés) → `src/img/clients/`.
@@ -36,3 +36,9 @@
 - [ ] Avant le lancement : confirmer le rang sur favikon.com et mettre à jour `ranking.rank` / `ranking.asof` dans `src/site.json` à chaque changement. Mettre `ranking.enabled` à false pour le retirer.
 - [ ] Formulation utilisée : « Créateurs LinkedIn les plus influents au Sénégal · classement Favikon, octobre 2026 » (reprend le mot « influent » de Fatoumata, toujours attribué à Favikon et daté ; le classement affiché est celui des créateurs).
 - [ ] Ne pas utiliser le logo Favikon sans autorisation.
+
+## Refonte premium 2.0 (30/10/2026)
+- [ ] « Notre influence en action » : fournir 3 à 6 vraies publications ou campagnes (lien, date, image, accord du client ou de la personne mise en avant) → `src/posts.json`. Chiffres de performance uniquement s'ils sont vérifiés (capture des statistiques LinkedIn).
+- [ ] Parcours de la fondatrice (formation, expériences, dates) → `founder_bio`. La mention « professionnelle de la communication » est à confirmer par Fatoumata.
+- [ ] Au lancement : `draft_placeholders` → false (retire tous les cadres « à fournir »).
+- [ ] Illustrations des trois expertises : SVG originaux. Option : remplacer par des photos commandées (pas de banque d'images générique).
