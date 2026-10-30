@@ -34,5 +34,5 @@
 ## Classement Favikon (ajouté le 30/10/2026)
 - [ ] Affiché : « N° 2 · Créateurs LinkedIn au Sénégal · classement Favikon, octobre 2026 » (d'après la capture de Fatoumata : score 94,3/100). Source : photo d'écran envoyée par Fatoumata, non vérifiée directement sur favikon.com.
 - [ ] Avant le lancement : confirmer le rang sur favikon.com et mettre à jour `ranking.rank` / `ranking.asof` dans `src/site.json` à chaque changement. Mettre `ranking.enabled` à false pour le retirer.
-- [ ] La formulation « 2e personne la plus influente » n'est PAS utilisée (le classement concerne la catégorie Créateurs LinkedIn au Sénégal).
+- [ ] Formulation utilisée : « Créateurs LinkedIn les plus influents au Sénégal · classement Favikon, octobre 2026 » (reprend le mot « influent » de Fatoumata, toujours attribué à Favikon et daté ; le classement affiché est celui des créateurs).
 - [ ] Ne pas utiliser le logo Favikon sans autorisation.
