@@ -6,7 +6,7 @@
 - [ ] Logos originaux des 5 clients (fichiers non modifiés) → `src/img/clients/`.
 - [ ] Les 6 catégories de clients et les formulations « Pourquoi FBA ».
 - [ ] Biographie / parcours (la mention « parmi les profils les plus visibles du Sénégal » n'est PAS publiée tant qu'elle n'est pas vérifiable).
-- [ ] Courriel professionnel, URL LinkedIn de Fatoumata, page LinkedIn de l'entreprise, autres réseaux (`src/site.json` → social). Aucune icône n'est affichée sans URL.
+- [ ] Courriel professionnel, page LinkedIn de l'entreprise, autres réseaux (`src/site.json` → social). Aucune icône n'est affichée sans URL.
 - [ ] Mentions légales : forme juridique, n° RCCM / NINEA, directeur de la publication.
 - [ ] Politique de confidentialité : validation du texte (responsable du traitement, durée de conservation).
 - [ ] Photos : confirmer l'usage public des portraits.
