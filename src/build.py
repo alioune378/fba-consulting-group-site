@@ -293,13 +293,23 @@ def founder_story(full=False):
 def parcours():
     P = S.get("founder_parcours")
     if not P: return ""
+    def item(x):
+        more = "" if x.get("featured", True) else " pc-more"
+        return f'''<li class="pc-item{more} reveal">{f'<p class="pc-d">{e(x["dates"])}</p>' if x.get("dates") else ""}<h4>{e(x["title"])}</h4><p class="pc-o">{e(x["org"])}</p>{f'<p class="pc-x">{e(x["detail"])}</p>' if x.get("detail") else ""}</li>'''
     def col(title, icn, items):
-        li = "".join(f'''<li class="pc-item reveal"><p class="pc-d">{e(x["dates"])}</p><h4>{e(x["title"])}</h4><p class="pc-o">{e(x["org"])}</p>{f'<p class="pc-x">{e(x["detail"])}</p>' if x.get("detail") else ""}</li>''' for x in items)
-        return f'<div class="pc-col"><h3 class="pc-h"><span class="offer-ic">{ic(icn)}</span>{e(title)}</h3><ol class="pc-list">{li}</ol></div>'
+        return f'<div class="pc-col"><h3 class="pc-h"><span class="offer-ic">{ic(icn)}</span>{e(title)}</h3><ol class="pc-list">{"".join(item(x) for x in items)}</ol></div>'
+    exp = "".join(f'''<li class="xcard reveal"><span class="offer-ic">{ic(x["icon"])}</span><h3>{e(x["title"])}</h3><p>{e(x["text"])}</p><p class="xproof">{ic("check")}<span>{e(x["proof"])}</span></p><a class="textlink" href="{x["link"]}">{e(x["cta"])} {ic("arrow")}</a></li>''' for x in P.get("expertise", []))
+    certs = "".join(f'<li class="ccard reveal"><span class="ccard-y">{e(x["dates"])}</span><b>{e(x["org"])}</b><span>{e(x["title"])}</span></li>' for x in P.get("certifications", []))
+    hidden = any(not x.get("featured", True) for x in P["experience"] + P["education"])
     sk = "".join(f"<li>{e(x)}</li>" for x in P.get("skills", []))
-    return f'''<section class="band band--ivory parcours" id="parcours"><div class="wrap">{shead("Parcours", "Un parcours entre logistique, commerce digital et communication.", "Expériences, formations et certifications de Fatoumata Ba.")}
-<div class="pc-grid">{col("Expériences", "brief", P["experience"])}<div class="pc-side">{col("Formation", "doc", P["education"])}{col("Certifications", "star", P["certifications"])}</div></div>
-{f'<div class="pc-skills reveal"><p class="kpi-k">Compétences</p><ul>{sk}</ul></div>' if sk else ""}<p class="m-src reveal">Source : {e(P["source"])}.</p></div></section>'''
+    note = "" if P.get("validated") else placeholder_note(f"Brouillon interne : informations reprises du profil LinkedIn ({P['source'].split(', ')[-1]}), à faire valider par Fatoumata Ba (dates CFS manquantes). Passer founder_parcours.validated à true après validation : cette note disparaîtra.")
+    return f'''<section class="band band--ivory parcours" id="parcours"><div class="wrap">{shead("Parcours", e(P.get("heading", "Parcours")), e(P.get("lede", "")))}
+<ul class="xcards">{exp}</ul>
+<div class="pc-wrap" id="pc-all"><div class="pc-grid">{col("Expériences clés", "brief", P["experience"])}{col("Formation", "doc", P["education"])}</div>
+{f'<button type="button" class="pc-toggle" aria-expanded="false" aria-controls="pc-all" hidden>Voir tout le parcours</button>' if hidden else ""}</div>
+{f'<div class="pc-certs"><h3 class="pc-h"><span class="offer-ic">{ic("star")}</span>Certifications</h3><ul class="ccards">{certs}</ul></div>' if certs else ""}
+{f'<div class="pc-skills reveal"><p class="kpi-k">Compétences</p><ul>{sk}</ul></div>' if sk else ""}
+<div class="pc-cta reveal"><a class="btn btn--navy btn--lg" href="services.html">Découvrir nos services {ic("arrow")}</a><a class="btn btn--outline btn--lg" href="contact.html#rendez-vous">{ic("cal")} Échanger avec Fatoumata</a></div>{note}</div></section>'''
 
 AUDIENCES = [
  ("Entreprises en quête de visibilité", "Demander un devis", "contact.html#demande"),

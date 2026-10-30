@@ -51,31 +51,36 @@
         "title": "Collaboratrice externe",
         "org": "HOUSE-MATIC",
         "dates": "Depuis janv. 2026",
-        "detail": "Indépendante · à distance"
+        "detail": "Indépendante · à distance",
+        "featured": true
       },
       {
         "title": "Responsable commerciale",
         "org": "LE BRIEF",
         "dates": "Juin – juil. 2025",
-        "detail": "Temps partiel · à distance"
+        "detail": "Temps partiel · à distance",
+        "featured": true
       },
       {
         "title": "Assistante de direction",
         "org": "CEFAE Sénégal",
         "dates": "Janv. – juin 2025",
-        "detail": "Temps partiel · région de Thiès"
+        "detail": "Temps partiel · région de Thiès",
+        "featured": false
       },
       {
         "title": "Enquêtrice",
         "org": "Ministère de la Santé et de l’Action sociale",
         "dates": "Août – oct. 2024",
-        "detail": "Enquête STEPS sur les maladies non transmissibles"
+        "detail": "Enquête STEPS sur les maladies non transmissibles",
+        "featured": false
       },
       {
         "title": "Gestionnaire des flux de transport",
         "org": "CFS – Chemin de Fer du Sénégal",
         "dates": "",
-        "detail": ""
+        "detail": "",
+        "featured": true
       }
     ],
     "education": [
@@ -83,25 +88,15 @@
         "title": "Diplôme d’études supérieures professionnelles, Transport logistique ferroviaire",
         "org": "ISEP de Thiès",
         "dates": "2022 – 2024",
-        "detail": "Mention assez bien"
-      },
-      {
-        "title": "Certificat, Commerce digital, informatique et internet, traitement des données",
-        "org": "FORCE-N Sénégal",
-        "dates": "2024",
-        "detail": ""
-      },
-      {
-        "title": "Certificat, Les fondamentaux de la gestion de projet",
-        "org": "DisasterReady",
-        "dates": "2024",
-        "detail": ""
+        "detail": "Mention assez bien",
+        "featured": true
       },
       {
         "title": "Baccalauréat général",
         "org": "Lycée Ahmadou Ndack Seck",
         "dates": "2017 – 2021",
-        "detail": ""
+        "detail": "",
+        "featured": false
       }
     ],
     "certifications": [
@@ -116,6 +111,18 @@
         "org": "Volontaires des Nations Unies",
         "dates": "Janv. 2026",
         "detail": ""
+      },
+      {
+        "title": "Commerce digital, informatique et internet, traitement des données",
+        "org": "FORCE-N Sénégal",
+        "dates": "2024",
+        "detail": ""
+      },
+      {
+        "title": "Les fondamentaux de la gestion de projet",
+        "org": "DisasterReady",
+        "dates": "2024",
+        "detail": ""
       }
     ],
     "skills": [
@@ -124,6 +131,43 @@
       "Commerce digital",
       "Planification des transports",
       "Sécurité ferroviaire"
+    ],
+    "validated": false,
+    "heading": "Un parcours pluridisciplinaire au service de vos ambitions.",
+    "lede": "Découvrez les expériences, formations et compétences qui nourrissent l’approche professionnelle de Fatoumata Ba.",
+    "expertise": [
+      {
+        "icon": "user",
+        "title": "Visibilité des talents",
+        "text": "Accompagnement de candidats, recommandations et mise en relation avec des entreprises.",
+        "proof": "Candidats recommandés aujourd’hui en poste (voir témoignages)",
+        "link": "emploi-talents.html",
+        "cta": "Emploi & Talents"
+      },
+      {
+        "icon": "in",
+        "title": "Communication digitale",
+        "text": "Gestion des réseaux sociaux et création de contenu LinkedIn.",
+        "proof": "+83 000 abonnés · +29 M d’impressions en 365 jours",
+        "link": "services.html#branding",
+        "cta": "Personal branding"
+      },
+      {
+        "icon": "mega",
+        "title": "Développement commercial",
+        "text": "Promotion d’offres et relation client, appuyées par une formation en commerce digital.",
+        "proof": "Responsable commerciale (LE BRIEF) · Certificat FORCE-N",
+        "link": "services.html#entreprises",
+        "cta": "Promotion d’entreprise"
+      },
+      {
+        "icon": "brief",
+        "title": "Organisation & logistique",
+        "text": "Rigueur opérationnelle, gestion de flux et de projets.",
+        "proof": "DESP Transport logistique ferroviaire (ISEP de Thiès) · CFS",
+        "link": "services.html",
+        "cta": "Nos services"
+      }
     ]
   }
 }

@@ -36,6 +36,8 @@ $$('.tfilters').forEach(function(g){var bs=$$('.tf',g),cards=$$('.tcard',g.paren
 var tq=matchMedia('(max-width:759px)');function clampT(){$$('.tcard').forEach(function(c){var p=$('blockquote p',c),bt=$('.t-more',c);if(!p||!bt)return;if(bt.getAttribute('aria-expanded')==='true')return;c.classList.add('is-clamped');var over=tq.matches&&p.scrollHeight>p.clientHeight+2;bt.hidden=!over;if(!over)c.classList.remove('is-clamped')})}
 $$('.t-more').forEach(function(bt){bt.addEventListener('click',function(){var c=bt.closest('.tcard'),o=bt.getAttribute('aria-expanded')!=='true';c.classList.toggle('is-clamped',!o);bt.setAttribute('aria-expanded',o);bt.textContent=o?'Réduire':'Lire la suite'})});
 clampT();tq.addEventListener('change',clampT);addEventListener('load',clampT);
+/* parcours: show all */
+$$('.pc-toggle').forEach(function(bt){var w=bt.closest('.pc-wrap');bt.hidden=false;bt.addEventListener('click',function(){var o=w.classList.toggle('is-open');bt.setAttribute('aria-expanded',o);bt.textContent=o?'Réduire le parcours':'Voir tout le parcours';if(!o)w.scrollIntoView({block:'start'})})});
 /* forms */
 var qs=new URLSearchParams(location.search),svc=qs.get('service');if(svc){var sel=$('#d-svc');if(sel)for(var i=0;i<sel.options.length;i++)if(sel.options[i].text===svc)sel.selectedIndex=i}
 $$('form.form').forEach(function(f){

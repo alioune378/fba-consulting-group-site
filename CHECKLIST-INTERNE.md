@@ -51,3 +51,4 @@
 ## Parcours de la fondatrice (ajouté le 30/10/2026)
 - [x] Parcours publié sur « À propos » d'après les captures de son profil LinkedIn (`founder_parcours` dans `src/site.json`).
 - [ ] Fatoumata relit et valide : intitulés, dates (CFS sans dates : à compléter), et l'accroche « formée à la logistique et au commerce digital » qui remplace « professionnelle de la communication ».
+- [ ] Après validation par Fatoumata : `founder_parcours.validated` → true (retire la note interne et la mention LinkedIn). Valider aussi les 4 expertises et leurs preuves.
