@@ -29,19 +29,20 @@ $$('form.form').forEach(function(f){
  function clr(){$$('.f',f).forEach(function(x){x.classList.remove('has-err');var m=$('.err',x);if(m)m.remove()})}
  function bad(el,msg){var w=el.closest('.f');w.classList.add('has-err');var m=d.createElement('span');m.className='err';m.id=el.id+'-e';m.textContent=msg;w.appendChild(m);el.setAttribute('aria-describedby',m.id);el.setAttribute('aria-invalid','true')}
  f.addEventListener('submit',function(ev){ev.preventDefault();clr();st.className='status';st.textContent='';var first=null,ok=true;
-  $$('input,select,textarea',f).forEach(function(el){el.removeAttribute('aria-invalid');if(el.type==='hidden'||el.name==='bot-field')return;var v=(el.type==='checkbox')?el.checked:el.value.trim(),msg='';
+  $$('input,select,textarea',f).forEach(function(el){el.removeAttribute('aria-invalid');if(el.type==='hidden'||el.name==='bot-field')return;var v=(el.type==='checkbox')?el.checked:(el.type==='file'?(el.files&&el.files.length?'f':''):el.value.trim()),msg='';
    if(el.required&&!v)msg=el.type==='checkbox'?'Veuillez accepter pour continuer.':'Ce champ est obligatoire.';
    else if(el.type==='email'&&v&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v))msg='Adresse e-mail invalide.';
    else if(el.type==='tel'&&v&&v.replace(/\D/g,'').length<8)msg='Numéro invalide (8 chiffres minimum).';
-   else if(el.name==='description'&&v&&v.length<20)msg='Merci de décrire votre projet (20 caractères minimum).';
+   else if(el.minLength>0&&v&&v.length<el.minLength)msg='Merci de détailler un peu plus ('+el.minLength+' caractères minimum).';
+   else if(el.type==='file'&&el.files&&el.files[0]){var fl=el.files[0],okx=/\.(pdf|docx?)$/i.test(fl.name);if(!okx)msg='Format accepté : PDF, DOC ou DOCX.';else if(fl.size>(+el.dataset.max||5242880))msg='Fichier trop volumineux (5 Mo maximum).'}
    if(msg){ok=false;bad(el,msg);if(!first)first=el}});
   if(!ok){st.className='status bad';st.textContent='Veuillez corriger les champs signalés.';first.focus();return}
   if($('[name=bot-field]',f).value||Date.now()-(+t.value)<2500){st.className='status ok';st.textContent='Merci.';return}
   var btn=$('button[type=submit]',f);btn.disabled=true;var label=btn.textContent;btn.textContent='Envoi en cours…';
-  var body=new URLSearchParams(new FormData(f)).toString();
+  var fd=new FormData(f),hasFile=false;$$('input[type=file]',f).forEach(function(x){if(x.files&&x.files.length)hasFile=true});var body=hasFile?fd:new URLSearchParams(fd).toString();
   var done=function(good){btn.disabled=false;btn.textContent=label;
-   if(good){f.reset();st.className='status ok';st.textContent=f.name==='rendez-vous'?'Demande reçue. Votre rendez-vous n’est pas encore confirmé : FBA Consulting Group vous répondra pour confirmer ou proposer un autre créneau.':'Merci, votre demande a bien été reçue. Nous vous répondrons prochainement.'}
+   if(good){f.reset();st.className='status ok';st.textContent=f.name==='rendez-vous'?'Demande reçue. Votre rendez-vous n’est pas encore confirmé : FBA Consulting Group vous répondra pour confirmer ou proposer un autre créneau.':(f.name==='candidature'?'Merci, votre candidature a bien été reçue. Aucune information ne sera publiée sans votre accord écrit explicite.':'Merci, votre demande a bien été reçue. Nous vous répondrons prochainement.')}
    else{st.className='status bad';st.textContent='Votre demande n’a pas pu être envoyée. Veuillez réessayer ou nous écrire sur WhatsApp.'}};
   if(f.dataset.mode!=='netlify'){btn.disabled=false;btn.textContent=label;st.className='status bad';st.textContent='Mode démonstration : aucune demande n’a été envoyée.';return}
-  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body}).then(function(r){done(r.ok)}).catch(function(){done(false)})})});
+  fetch('/',hasFile?{method:'POST',body:body}:{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body}).then(function(r){done(r.ok)}).catch(function(){done(false)})})});
 })();

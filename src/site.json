@@ -20,5 +20,6 @@
     "confirmed": false
   },
   "whatsapp_display": "+221 77 641 78 41",
-  "city": "Thiès, Sénégal"
+  "city": "Thiès, Sénégal",
+  "cv_upload": false
 }

@@ -6,6 +6,7 @@ from pathlib import Path
 SRC = Path(__file__).parent; DIST = SRC.parent / "dist"
 S = json.loads((SRC / "site.json").read_text(encoding="utf-8"))
 CLIENTS = json.loads((SRC / "clients.json").read_text(encoding="utf-8"))
+TALENTS = [t for t in json.loads((SRC / "talents.json").read_text(encoding="utf-8")) if t.get("approved")]
 CASES = json.loads((SRC / "cases.json").read_text(encoding="utf-8"))
 e = lambda s: html.escape(str(s), quote=True)
 FLAGS = S["review_flags"]
@@ -49,9 +50,10 @@ CATEGORIES = [
  ("Entrepreneurs et porteurs de projets", "Présenter votre initiative et attirer clients, partenaires et opportunités."),
  ("Professionnels et cadres", "Renforcer votre image professionnelle et votre réseau."),
  ("Chercheurs d’emploi", "Valoriser votre parcours et accroître votre visibilité."),
- ("Talents et experts", "Faire rayonner votre expertise auprès d’une audience qualifiée."),
+ ("Recruteurs", "Échanger sur vos besoins et entrer en relation avec des talents."),
  ("Institutions et organisations", "Communiquer vos initiatives et renforcer votre présence en ligne."),
 ]
+JOBSVC = {"Accompagnement des chercheurs d’emploi", "Valorisation des talents"}
 INQUIRY = ["Visibilité LinkedIn", "Promotion d’entreprise ou de projet", "Publications sponsorisées", "Personal branding",
            "Accompagnement chercheur d’emploi", "Valorisation de talents", "Promotion de projet entrepreneurial", "Partenariat"]
 TIMELINES = ["Dès que possible", "Sous 1 mois", "Dans 1 à 3 mois", "Pas encore défini"]
@@ -82,7 +84,7 @@ def page(fn, title, desc, body, og_title=None):
 <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Ouvrir le menu">{ic("menu")}</button></div></header>
 <main id="main" tabindex="-1">{body}</main>
 <footer class="footer"><div class="wrap fgrid"><div class="f-brand"><img class="flogo" src="img/fba-logo-dark.png" width="150" height="130" alt="FBA Consulting Group" loading="lazy"><p>Visibilité LinkedIn, image professionnelle et promotion de projets pour entreprises, entrepreneurs et professionnels.</p>{social("on-dark")}</div>
-<nav aria-label="Pied de page"><h2>Navigation</h2><ul>{"".join(f'<li><a href="{h}">{l}</a></li>' for h, l in NAV)}</ul></nav>
+<nav aria-label="Pied de page"><h2>Navigation</h2><ul>{"".join(f'<li><a href="{h}">{l}</a></li>' for h, l in NAV + [("emploi-talents.html", "Emploi &amp; Talents")])}</ul></nav>
 <div><h2>Contact</h2><ul><li><a href="contact.html#rendez-vous">Prendre rendez-vous</a></li><li><a href="contact.html#demande">Demande de devis</a></li><li><a href="{e(WA)}" target="_blank" rel="noopener">WhatsApp · {e(S["whatsapp_display"])}</a></li>{f'<li><a href="mailto:{e(S["email"])}">{e(S["email"])}</a></li>' if S["email"] else ""}<li class="loc">{ic("pin")} {e(S["city"])}</li></ul></div></div>
 <div class="wrap fbottom"><span>© <span id="yr">2026</span> FBA Consulting Group. Tous droits réservés.</span><span class="flinks"><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Politique de confidentialité</a></span><span class="credit">Site web par Dalal Technologies</span></div></footer>
 <a class="wa-float" href="{e(WA)}" target="_blank" rel="noopener" aria-label="Écrire sur WhatsApp : {e(S["whatsapp_display"])}">{ic("wa")}<span>WhatsApp</span></a>
@@ -127,15 +129,46 @@ def case_card(c):
     return f'<article class="case reveal"><h3>{e(c["title"])}</h3>{f"<p class=muted>{e(c["sector"])}</p>" if c.get("sector") else ""}<dl class="kvs">{sec("objective","Objectif de communication")}{sec("strategy","Stratégie mise en œuvre")}{sec("results","Résultats")}</dl>{f"<div class=cimgs>{imgs}</div>" if imgs else ""}{f"<ul class=clinks>{links}</ul>" if links else ""}</article>'
 
 # ---------- pages ----------
+PILLARS = [
+ ("Entreprises & Entrepreneurs", "Promotion d’entreprise, visibilité de projets, publications stratégiques et communication professionnelle.", "pillar-entreprises.webp", "Promouvoir mon entreprise", "contact.html?service=" + urllib.parse.quote("Promotion d’entreprise ou de projet") + "#demande", "Fatoumata Ba, fondatrice de FBA Consulting Group, tenant une tablette"),
+ ("Emploi & Talents", "Révision de CV, optimisation du profil LinkedIn, visibilité professionnelle et soutien aux chercheurs d’emploi.", "pillar-emploi.webp", "Valoriser mon profil", "emploi-talents.html", "Fatoumata Ba à son bureau"),
+ ("Personal Branding & Influence", "Positionnement professionnel, valorisation de l’expertise, visibilité des dirigeants et personal branding sur LinkedIn.", "pillar-branding.webp", "Développer mon image", "contact.html?service=Personal%20branding#demande", "Portrait de Fatoumata Ba"),
+]
+def pillars():
+    cards = "".join(f'''<li class="pillar{" pillar--feat" if i == 1 else ""} reveal"><a class="pillar-img" href="{h}" tabindex="-1" aria-hidden="true"><img src="img/{img}" width="800" height="600" alt="" loading="lazy" decoding="async"></a><div class="pillar-body"><h3>{e(t)}</h3><p>{e(d)}</p><a class="btn {"" if i == 1 else "btn--outline"}" href="{h}">{e(cta)} {ic("arrow")}</a></div></li>''' for i, (t, d, img, cta, h, alt) in enumerate(PILLARS))
+    return f'''<section class="band" id="services"><div class="wrap"><div class="shead reveal"><p class="eyebrow">Nos services</p><h2>Trois façons de gagner en visibilité</h2></div><ul class="pillars">{cards}</ul><p class="center"><a class="textlink" href="services.html">Voir nos sept services {ic("arrow")}</a></p></div></section>'''
+
+BENEFITS = ["Révision et amélioration du CV", "Optimisation du profil LinkedIn", "Présentation et positionnement professionnels", "Visibilité des profils approuvés", "Préparation aux entretiens", "Exposition auprès d’audiences professionnelles"]
+DISCLAIM = "Service de mise en visibilité et de réseautage professionnel. Aucun entretien, offre d’emploi ou recrutement n’est garanti."
+def emploi_band():
+    ben = "".join(f'<li>{ic("check")}<span>{e(x)}</span></li>' for x in BENEFITS)
+    return f'''<section class="band band--navy emploi" id="emploi"><div class="wrap emploi-in"><div class="reveal"><p class="eyebrow on-dark">Emploi &amp; Talents</p><h2>Votre talent mérite d’être découvert.</h2><p class="lede">FBA Consulting Group accompagne les chercheurs d’emploi et les professionnels dans la valorisation de leur parcours, l’optimisation de leur présence LinkedIn et la mise en visibilité de leurs compétences auprès d’une communauté professionnelle.</p>
+<div class="btn-row"><a class="btn" href="emploi-talents.html#candidature">Faire connaître mon profil</a><a class="btn btn--ghost" href="emploi-talents.html">Découvrir l’accompagnement emploi</a></div>
+<p class="recruit-line">Vous recrutez ? <a href="emploi-talents.html#recruteurs">Parlons de vos besoins.</a></p></div>
+<ul class="benefits reveal">{ben}</ul></div></section>'''
+
+AUDIENCES = [
+ ("Entreprises en quête de visibilité", "Demander un devis", "contact.html#demande"),
+ ("Entrepreneurs qui promeuvent un projet", "Parler de mon projet", "contact.html?service=" + urllib.parse.quote("Promotion de projets entrepreneuriaux") + "#demande"),
+ ("Professionnels qui construisent leur marque", "Développer mon image", "contact.html?service=Personal%20branding#demande"),
+ ("Chercheurs d’emploi en quête d’exposition", "Faire connaître mon profil", "emploi-talents.html#candidature"),
+ ("Recruteurs qui cherchent des talents", "Parlons de vos besoins", "emploi-talents.html#recruteurs"),
+]
+def talents_spotlight():
+    if not TALENTS: return ""
+    def row(k, l, t): return f'<div class="kv"><dt>{l}</dt><dd>{e(t[k])}</dd></div>' if t.get(k) else ""
+    cards = "".join(f'<article class="case reveal"><dl class="kvs">{row("background","Parcours",t)}{row("challenge","Défi de visibilité",t)}{row("support","Accompagnement",t)}{row("publication","Publication",t)}{row("outcome","Résultat vérifié",t)}</dl></article>' for t in TALENTS)
+    return f'<section class="band band--paper"><div class="wrap"><div class="shead reveal"><p class="eyebrow">Impact</p><h2>Des talents mis en lumière.</h2></div><div class="cases">{cards}</div></div></section>'
+
 def home():
     st = S["stats"]
-    svc = "".join(f'<li class="svc reveal"><span class="svc-ic">{ic(i)}</span><div><h3>{e(t)}</h3><p>{e(d)}</p></div></li>' for t, d, i in SERVICES)
-    cats = "".join(f'<li class="cat reveal"><h3>{e(t)}</h3><p>{e(d)}</p></li>' for t, d in CATEGORIES)
-    why = [("Une audience LinkedIn active", "Une communauté de plus de 83 000 abonnés pour porter vos messages."), ("Un interlocuteur direct", "Vous échangez avec la fondatrice pour cadrer votre besoin."), ("Une approche orientée image", "Chaque action sert votre crédibilité et vos objectifs."), ("Trois façons de commencer", "Rendez-vous, devis ou message WhatsApp, à votre convenance.")]
+    aud = "".join(f'<li class="reveal"><a class="aud" href="{h}"><span>{e(t)}</span><b>{e(c)} {ic("arrow")}</b></a></li>' for t, c, h in AUDIENCES)
+    why = [("Une audience LinkedIn active", "Une communauté de plus de 83 000 abonnés pour porter vos messages."), ("Un interlocuteur direct", "Vous échangez avec la fondatrice pour cadrer votre besoin."), ("Une approche orientée image", "Chaque action sert votre crédibilité et vos objectifs."), ("Plusieurs façons de commencer", "Rendez-vous, devis ou message WhatsApp, à votre convenance.")]
     whyh = "".join(f'<li class="why reveal">{ic("check")}<div><h3>{e(t)}</h3><p>{e(d)}</p></div></li>' for t, d in why)
     testi = [c for c in CLIENTS if c["authorized"] and c.get("testimonial") and c.get("testimonial_author")]
     tblk = ""
     if testi: tblk = f'''<section class="band band--paper"><div class="wrap"><div class="shead reveal"><p class="eyebrow">Témoignages</p><h2>Ce que disent nos clients</h2></div><div class="grid g2">{"".join(f'<figure class="quote reveal"><blockquote>“{e(c["testimonial"])}”</blockquote><figcaption>{e(c["testimonial_author"])} · {e(c["name"])}</figcaption></figure>' for c in testi)}</div></div></section>'''
+    li = f'<a class="textlink" href="{e(S["social"]["linkedin_founder"])}" target="_blank" rel="noopener noreferrer">Suivre Fatoumata sur LinkedIn {ic("arrow")}</a>' if S["social"]["linkedin_founder"] else ""
     return f'''<section class="hero"><div class="wrap hero-in"><div class="hero-copy"><p class="eyebrow on-dark">FBA Consulting Group</p>
 <h1><span>Gagnez en visibilité.</span> <em>Affirmez votre expertise.</em></h1>
 <p class="lede">Stratégie LinkedIn, personal branding et promotion de projets pour les entreprises, les entrepreneurs et les professionnels.</p>
@@ -143,11 +176,12 @@ def home():
 <figure class="hero-fig"><picture><source media="(max-width:820px)" srcset="img/fatoumata-ba-hero-900.webp"><img src="img/fatoumata-ba-hero-900.webp" width="900" height="1190" alt="Fatoumata Ba, fondatrice de FBA Consulting Group" fetchpriority="high"></picture></figure></div></section>
 <section class="band band--navy stats" id="impact"><div class="wrap"><div class="stat-row"><div class="stat reveal"><b><span data-count="{st["followers"]}" data-prefix="+">+83 000</span></b><span>Abonnés LinkedIn</span></div><div class="stat reveal"><b><span data-count="{st["impressions_millions"]}" data-prefix="+" data-suffix=" millions">+28 millions</span></b><span>Impressions cumulées sur LinkedIn</span></div></div></div></section>
 {clients_section()}
-<section class="band" id="services"><div class="wrap"><div class="shead reveal"><p class="eyebrow">Nos services</p><h2>Sept services pour votre visibilité</h2></div><ul class="grid g3 svcs">{svc}</ul><p class="center"><a class="textlink" href="services.html">Tous nos services {ic("arrow")}</a></p></div></section>
-<section class="band band--paper"><div class="wrap"><div class="shead reveal"><p class="eyebrow">Pour qui ?</p><h2>Des solutions adaptées à votre profil</h2></div><ul class="grid g3 cats">{cats}</ul></div></section>
+{pillars()}
+{emploi_band()}
+<section class="band band--paper"><div class="wrap"><div class="shead reveal"><p class="eyebrow">Pour qui ?</p><h2>Un accompagnement pour chaque profil</h2></div><ul class="auds">{aud}</ul></div></section>
+{talents_spotlight()}
 <section class="band"><div class="wrap"><div class="shead reveal"><p class="eyebrow">Pourquoi FBA ?</p><h2>Pourquoi travailler avec FBA Consulting Group</h2></div><ul class="grid g2">{whyh}</ul></div></section>
-<section class="band band--paper founder"><div class="wrap founder-in"><figure class="reveal"><img src="img/fatoumata-ba-founder-900.webp" width="900" height="1237" alt="Fatoumata Ba à son bureau" loading="lazy" decoding="async"></figure>
-<div class="reveal"><p class="eyebrow">La fondatrice</p><h2>Fatoumata Ba</h2><p class="lede">Fondatrice de FBA Consulting Group, Fatoumata Ba est une voix active sur LinkedIn, où elle fédère une communauté de plus de 83 000 abonnés.</p><p><a class="textlink" href="a-propos.html">En savoir plus {ic("arrow")}</a></p>{f'<a class="textlink" href="{e(S["social"]["linkedin_founder"])}" target="_blank" rel="noopener noreferrer">Suivre Fatoumata sur LinkedIn {ic("arrow")}</a>' if S["social"]["linkedin_founder"] else ""}</div></div></section>
+<section class="band band--paper founder"><div class="wrap founder-in2 reveal"><img class="avatar" src="img/fatoumata-ba-avatar.webp" width="360" height="360" alt="Fatoumata Ba" loading="lazy" decoding="async"><div><p class="eyebrow">La fondatrice</p><h2>Fatoumata Ba</h2><p class="lede">Fondatrice de FBA Consulting Group, Fatoumata Ba est une voix active sur LinkedIn, où elle fédère une communauté de plus de 83 000 abonnés.</p><p class="links"><a class="textlink" href="a-propos.html">En savoir plus {ic("arrow")}</a>{li}</p></div></div></section>
 {tblk}{cta_block()}'''
 
 def about():
@@ -156,7 +190,7 @@ def about():
 <section class="band band--paper"><div class="wrap narrow reveal"><p class="eyebrow">La fondatrice</p><h2>Fatoumata Ba</h2><p class="lede">Fondatrice de FBA Consulting Group, Fatoumata Ba est une voix active sur LinkedIn, où elle fédère une communauté de plus de 83 000 abonnés.</p>{f'<a class="textlink" href="{e(S["social"]["linkedin_founder"])}" target="_blank" rel="noopener noreferrer">Suivre Fatoumata sur LinkedIn {ic("arrow")}</a>' if S["social"]["linkedin_founder"] else ""}</div></section>{cta_block()}'''
 
 def services():
-    cards = "".join(f'<li class="svc svc--lg reveal"><span class="svc-ic">{ic(i)}</span><div><h3>{e(t)}</h3><p>{e(d)}</p><a class="textlink" href="contact.html?service={urllib.parse.quote(t)}#demande">Demander ce service {ic("arrow")}</a></div></li>' for t, d, i in SERVICES)
+    cards = "".join(f'<li class="svc svc--lg reveal"><span class="svc-ic">{ic(i)}</span><div><h3>{e(t)}</h3><p>{e(d)}</p><a class="textlink" href="{"emploi-talents.html" if t in JOBSVC else "contact.html?service=" + urllib.parse.quote(t) + "#demande"}">{"Découvrir l’accompagnement emploi" if t in JOBSVC else "Demander ce service"} {ic("arrow")}</a></div></li>' for t, d, i in SERVICES)
     cats = "".join(f'<li class="cat reveal"><h3>{e(t)}</h3><p>{e(d)}</p></li>' for t, d in CATEGORIES)
     return head("Nos services", "Sept services pour développer votre visibilité", "Choisissez le service qui correspond à votre besoin, ou décrivez votre projet et nous vous orienterons.") + f'<section class="band"><div class="wrap"><ul class="grid g2 svcs">{cards}</ul></div></section><section class="band band--paper"><div class="wrap"><div class="shead reveal"><p class="eyebrow">Solutions par profil</p><h2>Pour qui ?</h2></div><ul class="grid g3 cats">{cats}</ul></div></section>{cta_block()}'
 
@@ -203,8 +237,39 @@ def contact():
 <button class="btn" type="submit">Envoyer ma demande de rendez-vous</button><p class="status" role="status" aria-live="polite"></p>
 <ol class="steps"><li>Vous envoyez vos disponibilités.</li><li>FBA Consulting Group vous répond pour confirmer ou proposer un autre créneau.</li><li>Vous recevez la confirmation avec le mode d’échange.</li></ol></form></div></section>'''
 
+def emploi():
+    mode = S["form_mode"]; up = S.get("cv_upload", False)
+    common = lambda name: f'<input type="hidden" name="form-name" value="{name}"><p class="hp" aria-hidden="true"><label>Ne pas remplir <input name="bot-field" tabindex="-1" autocomplete="off"></label></p><input type="hidden" name="t" value="">'
+    ben = "".join(f'<li>{ic("check")}<span>{e(x)}</span></li>' for x in BENEFITS)
+    steps = ["Vous envoyez votre candidature via le formulaire.", "FBA Consulting Group examine votre profil et vous répond.", "Nous échangeons sur la meilleure façon de valoriser votre parcours.", "Rien n’est publié sans votre accord écrit explicite."]
+    cvfield = (f'<div class="f"><label for="c-cv">CV (facultatif · PDF, DOC ou DOCX · 5 Mo maximum)</label><input id="c-cv" name="cv" type="file" accept=".pdf,.doc,.docx,application/pdf" data-max="5242880"><span class="hint">Votre CV reste privé : il n’est jamais publié ni accessible par un lien public.</span></div>' if up else '<p class="hint">Vous pourrez nous transmettre votre CV après notre premier échange, par e-mail ou WhatsApp.</p>')
+    enc = ' enctype="multipart/form-data"' if up else ""
+    return head("Emploi & Talents", "Votre talent mérite d’être découvert.", "FBA Consulting Group accompagne les chercheurs d’emploi et les professionnels dans la valorisation de leur parcours, l’optimisation de leur présence LinkedIn et la mise en visibilité de leurs compétences auprès d’une communauté professionnelle.") + f'''
+<section class="band"><div class="wrap two-c"><div class="reveal"><h2>Ce que nous faisons</h2><ul class="benefits benefits--light">{ben}</ul><p class="fine-l">{e(DISCLAIM)}</p></div>
+<div class="reveal"><h2>Comment ça se passe</h2><ol class="steps steps--lg">{"".join(f"<li>{e(s)}</li>" for s in steps)}</ol><div class="btn-row"><a class="btn" href="#candidature">Faire connaître mon profil</a><a class="btn btn--outline" href="{e(WA)}" target="_blank" rel="noopener">{ic("wa")} WhatsApp</a></div></div></div></section>
+{talents_spotlight()}
+<section class="band band--paper" id="candidature"><div class="wrap narrow"><div class="shead reveal"><p class="eyebrow">Candidature</p><h2>Faire connaître mon profil</h2></div>
+<form class="form reveal" name="candidature" method="POST" data-netlify="true" netlify-honeypot="bot-field"{enc} data-mode="{mode}" novalidate>{common("candidature")}
+<div class="row2"><div class="f"><label for="c-nom">Nom complet *</label><input id="c-nom" name="nom" required autocomplete="name"></div><div class="f"><label for="c-email">E-mail *</label><input id="c-email" name="email" type="email" required autocomplete="email"></div></div>
+<div class="row2"><div class="f"><label for="c-tel">Téléphone ou WhatsApp *</label><input id="c-tel" name="telephone" type="tel" required autocomplete="tel"></div><div class="f"><label for="c-loc">Localisation *</label><input id="c-loc" name="localisation" required placeholder="Ville, pays" autocomplete="address-level2"></div></div>
+<div class="row2"><div class="f"><label for="c-dom">Domaine professionnel *</label><input id="c-dom" name="domaine" required></div><div class="f"><label for="c-niv">Niveau d’expérience *</label><select id="c-niv" name="niveau" required><option value="">Choisir…</option><option>Étudiant ou jeune diplômé</option><option>Moins de 3 ans</option><option>3 à 7 ans</option><option>8 ans et plus</option></select></div></div>
+<div class="f"><label for="c-opp">Opportunité recherchée *</label><input id="c-opp" name="opportunite" required placeholder="Ex. : poste, secteur, type de contrat"></div>
+<div class="f"><label for="c-pres">Brève présentation professionnelle *</label><textarea id="c-pres" name="presentation" rows="5" required minlength="30"></textarea></div>
+{cvfield}
+<div class="f chk"><input id="c-ok" name="consentement" type="checkbox" required><label for="c-ok">J’accepte que mes données soient utilisées par FBA Consulting Group pour traiter ma candidature. <a href="confidentialite.html">En savoir plus</a> *</label></div>
+<div class="f chk"><input id="c-pub" name="consentement_publication" type="checkbox"><label for="c-pub">Facultatif : j’autorise FBA Consulting Group à présenter mon profil publiquement (réseaux sociaux, site), uniquement après validation écrite du contenu avec moi.</label></div>
+<button class="btn" type="submit">Envoyer ma candidature</button><p class="status" role="status" aria-live="polite"></p></form></div></section>
+<section class="band" id="recruteurs"><div class="wrap narrow"><div class="shead reveal"><p class="eyebrow">Recruteurs</p><h2>Vous recrutez ? Parlons de vos besoins.</h2><p class="lede">Décrivez le profil recherché. FBA Consulting Group vous répond pour étudier comment mettre votre opportunité en visibilité auprès de sa communauté professionnelle.</p></div>
+<form class="form reveal" name="recruteur" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-mode="{mode}" novalidate>{common("recruteur")}
+<div class="row2"><div class="f"><label for="r-ent">Entreprise *</label><input id="r-ent" name="entreprise" required autocomplete="organization"></div><div class="f"><label for="r-nom2">Nom du contact *</label><input id="r-nom2" name="contact" required autocomplete="name"></div></div>
+<div class="row2"><div class="f"><label for="r-em">E-mail professionnel *</label><input id="r-em" name="email" type="email" required autocomplete="email"></div><div class="f"><label for="r-loc2">Localisation *</label><input id="r-loc2" name="localisation" required></div></div>
+<div class="row2"><div class="f"><label for="r-fn">Fonction ou compétences recherchées *</label><input id="r-fn" name="fonction" required></div><div class="f"><label for="r-ty">Type d’opportunité *</label><select id="r-ty" name="type_opportunite" required><option value="">Choisir…</option><option>CDI</option><option>CDD</option><option>Stage</option><option>Mission freelance</option><option>Autre</option></select></div></div>
+<div class="f"><label for="r-msg2">Message</label><textarea id="r-msg2" name="message" rows="4"></textarea></div>
+<div class="f chk"><input id="r-ok2" name="consentement" type="checkbox" required><label for="r-ok2">J’accepte que mes données soient utilisées pour répondre à ma demande. <a href="confidentialite.html">En savoir plus</a> *</label></div>
+<button class="btn" type="submit">Envoyer ma demande</button><p class="status" role="status" aria-live="polite"></p></form></div></section>{cta_block()}'''
+
 def privacy():
-    return head("Politique de confidentialité", "Confidentialité et données personnelles") + f'''<section class="band"><div class="wrap narrow prose"><p>Les informations saisies dans les formulaires (nom, organisation, e-mail, téléphone, description du projet, disponibilités) servent uniquement à répondre à votre demande ou à organiser un rendez-vous avec FBA Consulting Group. Elles ne sont pas affichées publiquement.</p><p>Les demandes sont reçues par l’intermédiaire du service de formulaires de l’hébergeur du site (Netlify) et consultées par FBA Consulting Group. Vous pouvez demander l’accès, la rectification ou la suppression de vos données par WhatsApp au {e(S["whatsapp_display"])} ou via le formulaire de contact.</p></div></section>'''
+    return head("Politique de confidentialité", "Confidentialité et données personnelles") + f'''<section class="band"><div class="wrap narrow prose"><p>Les informations saisies dans les formulaires (nom, organisation, e-mail, téléphone, description du projet, disponibilités, informations de candidature ou de recrutement) servent uniquement à répondre à votre demande ou à organiser un rendez-vous avec FBA Consulting Group. Elles ne sont pas affichées publiquement.</p><p>Aucun profil de candidat n’est publié sans accord écrit explicite de la personne concernée.</p><p>Les demandes sont reçues par l’intermédiaire du service de formulaires de l’hébergeur du site (Netlify) et consultées par FBA Consulting Group. Vous pouvez demander l’accès, la rectification ou la suppression de vos données par WhatsApp au {e(S["whatsapp_display"])} ou via le formulaire de contact.</p></div></section>'''
 
 def legal():
     return head("Mentions légales", "Mentions légales") + f'''<section class="band"><div class="wrap narrow prose"><h2>Éditeur du site</h2><p>FBA Consulting Group, {e(S["city"])}.<br>Fondatrice : Fatoumata Ba.<br>Contact : WhatsApp {e(S["whatsapp_display"])}.</p><h2>Hébergement</h2><p>Netlify, Inc., 512 2nd Street, Suite 200, San Francisco, CA 94107, États-Unis.</p><h2>Propriété intellectuelle</h2><p>Les contenus, logos et photographies présents sur ce site sont la propriété de FBA Consulting Group ou de leurs titulaires respectifs et ne peuvent être réutilisés sans autorisation.</p></div></section>'''
@@ -219,6 +284,7 @@ PAGES = {
  "realisations.html": ("Réalisations & Impact | FBA Consulting Group", "Références clients et études de cas de FBA Consulting Group.", realisations()),
  "contact.html": ("Contact et rendez-vous | FBA Consulting Group", "Contactez FBA Consulting Group par WhatsApp, formulaire de devis ou demande de rendez-vous.", contact()),
  "mentions-legales.html": ("Mentions légales | FBA Consulting Group", "Mentions légales de FBA Consulting Group.", legal()),
+ "emploi-talents.html": ("Emploi & Talents | FBA Consulting Group", "Faites connaître votre profil : CV, présence LinkedIn et visibilité professionnelle avec FBA Consulting Group. Recruteurs : parlons de vos besoins.", emploi()),
  "confidentialite.html": ("Confidentialité | FBA Consulting Group", "Politique de confidentialité de FBA Consulting Group.", privacy()),
  "404.html": ("Page introuvable | FBA Consulting Group", "Page introuvable.", notfound()),
 }
