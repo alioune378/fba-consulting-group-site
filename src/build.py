@@ -84,7 +84,7 @@ def page(fn, title, desc, body, og_title=None):
 <footer class="footer"><div class="wrap fgrid"><div class="f-brand"><img class="flogo" src="img/fba-logo-dark.png" width="150" height="130" alt="FBA Consulting Group" loading="lazy"><p>Visibilité LinkedIn, image professionnelle et promotion de projets pour entreprises, entrepreneurs et professionnels.</p>{social("on-dark")}</div>
 <nav aria-label="Pied de page"><h2>Navigation</h2><ul>{"".join(f'<li><a href="{h}">{l}</a></li>' for h, l in NAV)}</ul></nav>
 <div><h2>Contact</h2><ul><li><a href="contact.html#rendez-vous">Prendre rendez-vous</a></li><li><a href="contact.html#demande">Demande de devis</a></li><li><a href="{e(WA)}" target="_blank" rel="noopener">WhatsApp · {e(S["whatsapp_display"])}</a></li>{f'<li><a href="mailto:{e(S["email"])}">{e(S["email"])}</a></li>' if S["email"] else ""}<li class="loc">{ic("pin")} {e(S["city"])}</li></ul></div></div>
-<div class="wrap fbottom"><span>© <span id="yr">2026</span> FBA Consulting Group. Tous droits réservés.</span><span class="flinks"><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Politique de confidentialité</a></span></div></footer>
+<div class="wrap fbottom"><span>© <span id="yr">2026</span> FBA Consulting Group. Tous droits réservés.</span><span class="flinks"><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Politique de confidentialité</a></span><span class="credit">Site web par Dalal Technologies</span></div></footer>
 <a class="wa-float" href="{e(WA)}" target="_blank" rel="noopener" aria-label="Écrire sur WhatsApp : {e(S["whatsapp_display"])}">{ic("wa")}<span>WhatsApp</span></a>
 <script src="assets/app.js?v={V["app.js"]}" defer></script></body></html>'''
 

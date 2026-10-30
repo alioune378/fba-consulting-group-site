@@ -126,3 +126,5 @@ p{margin:0 0 1em}.wrap{width:100%;max-width:var(--wrap);margin-inline:auto;paddi
 .chan-c .ic{width:28px;height:28px}
 
 .cta-sec .btn{white-space:nowrap;line-height:1.1;padding:0 10px;font-size:.9rem}.flogo{border-radius:10px}
+
+.credit{flex-basis:100%;font-size:.8rem;color:#8fa3bf}
