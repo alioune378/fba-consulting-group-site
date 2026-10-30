@@ -422,3 +422,14 @@ body.nav-open .wa-float{opacity:0;pointer-events:none}
 .t-out--intent .t-out-ic{background:transparent;border:1px solid var(--gold);color:var(--gold-d)}.tcard--entreprise .t-out--intent .t-out-ic{color:var(--gold-l);background:transparent}
 .t-out--intent .t-out-v{font-weight:500}
 @media(max-width:600px){.proof-dlg{max-width:calc(100vw - 12px);max-height:96dvh}.proof-dlg-in{padding:8px;max-height:96dvh}}
+
+/* ===== QA pass: client tiles + spacing ===== */
+.tile{flex-direction:column;gap:8px}
+.tile-logo{display:flex;align-items:center;justify-content:center;width:100%;flex:1;min-height:0}
+.tile-logo img{max-height:72px;max-width:90%;width:auto;height:auto;object-fit:contain;border-radius:8px}
+.tile-svc{margin:0;font-size:.74rem;line-height:1.35;text-align:center;color:var(--mute)}
+.tile--svc{aspect-ratio:auto;min-height:150px}
+@media(max-width:759px){.tile{aspect-ratio:auto;min-height:118px}.tile:last-child:nth-child(odd){min-height:104px}}
+@media(max-width:359px){.tiles{gap:10px}.tile{padding:22px 10px 12px}.tile-logo img{max-height:58px}}
+.clients{padding-bottom:clamp(36px,5vw,64px)}.clients .more{margin-top:22px}
+.clients+.testis{padding-top:clamp(28px,4vw,56px);border-top:1px solid var(--line)}

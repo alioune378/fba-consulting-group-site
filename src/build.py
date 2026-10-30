@@ -191,14 +191,15 @@ def client_tile(c, i):
     if c["authorized"] and c["logo"]: inner = f'<img src="img/clients/{e(c["logo"])}" alt="Logo {e(c["name"])}" loading="lazy" decoding="async">'
     elif client_visible(c): inner = f'<span class="wordmark">{e(c["name"])}</span>'
     else: inner = '<span class="wordmark wordmark--ph">Logo client<small>autorisation en attente</small></span>'
-    return f'<li class="tile{"" if client_visible(c) else " tile--ph"}"><span class="tile-n">{i:02d}</span>{inner}</li>'
+    svc = f'<p class="tile-svc">{e(c["service"])}</p>' if client_visible(c) and c.get("service") else ""   # only once confirmed in clients.json
+    return f'<li class="tile{"" if client_visible(c) else " tile--ph"}{" tile--svc" if svc else ""}"><span class="tile-n">{i:02d}</span><span class="tile-logo">{inner}</span>{svc}</li>'
 def clients_section(link=True):
     vis = [c for c in CLIENTS if client_visible(c)]
     shown = CLIENTS if (DRAFT and not SHOW and len(vis) < len(CLIENTS)) else vis
     if not shown: return ""
     more = f'<p class="more reveal"><a class="textlink" href="realisations.html">Voir les références {ic("arrow")}</a></p>' if link and vis else ""
     note = placeholder_note("Brouillon interne : les noms et logos des clients n’apparaissent qu’après leur autorisation écrite (src/clients.json → authorized).") if len(vis) < len(CLIENTS) else ""
-    return f'''<section class="band band--ivory clients" id="clients"><div class="wrap">{shead("Références", "Ils nous font confiance.", "Des entreprises clientes de FBA Consulting Group, présentées avec leur accord.", "center-h")}
+    return f'''<section class="band band--ivory clients" id="clients"><div class="wrap">{shead("Références", "Ils nous font confiance.", "Des entreprises clientes de FBA Consulting Group.", "center-h")}
 <ul class="tiles reveal" aria-label="Clients de FBA Consulting Group">{"".join(client_tile(c, i+1) for i, c in enumerate(shown))}</ul>{more}{note}</div></section>'''
 
 FIELDS = [("sector", "Secteur"), ("service", "Service fourni"), ("objectives", "Objectifs de la collaboration"), ("work", "Travail réalisé"), ("outcomes", "Résultats vérifiés")]

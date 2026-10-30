@@ -26,7 +26,7 @@ $$('[data-count]').forEach(function(el){var t=+el.dataset.count,p=el.dataset.pre
 /* whatsapp button: step aside over forms, CTA bands and footer, and while typing */
 var wf=$('.wa-float');if(wf&&'IntersectionObserver' in window){var seen=new Set(),down=false,ly=scrollY,upd=function(){var typing=d.activeElement&&/^(INPUT|TEXTAREA|SELECT)$/.test(d.activeElement.tagName);wf.classList.toggle('is-hidden',seen.size>0||!!typing||down)};
  addEventListener('scroll',function(){var y=scrollY,dy=y-ly;if(Math.abs(dy)>8){down=dy>0&&y>300;ly=y;upd()}},{passive:true});
- var wo=new IntersectionObserver(function(es){es.forEach(function(e){e.isIntersecting?seen.add(e.target):seen.delete(e.target)});upd()});$$('.form,.cta,.footer').forEach(function(el){wo.observe(el)});d.addEventListener('focusin',upd);d.addEventListener('focusout',function(){setTimeout(upd,50)})}
+ var wo=new IntersectionObserver(function(es){es.forEach(function(e){e.isIntersecting?seen.add(e.target):seen.delete(e.target)});upd()});$$('.form,.cta,.footer,.t-cta,.paths,.hero-cta,.proof-dlg').forEach(function(el){wo.observe(el)});d.addEventListener('focusin',upd);d.addEventListener('focusout',function(){setTimeout(upd,50)})}
 /* proof lightbox (falls back to opening the image) */
 $$('[data-dialog]').forEach(function(a){var dl=d.getElementById(a.dataset.dialog);if(!dl||!dl.showModal)return;a.addEventListener('click',function(ev){ev.preventDefault();dl.showModal()})});
 $$('dialog').forEach(function(dl){dl.addEventListener('click',function(ev){if(ev.target===dl||ev.target.closest('[data-close]'))dl.close()})});
