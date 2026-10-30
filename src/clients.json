@@ -1,7 +1,7 @@
 [
   {"id": "n2m-securite", "name": "N2M SÉCURITÉ", "authorized": true, "logo": "n2m-securite.jpg", "sector": "", "service": "", "objectives": "", "work": "", "outcomes": "", "testimonial": "", "testimonial_author": ""},
   {"id": "nvi-facility", "name": "NVI FACILITY", "authorized": true, "logo": "nvi-facility.jpg", "sector": "", "service": "", "objectives": "", "work": "", "outcomes": "", "testimonial": "", "testimonial_author": ""},
-  {"id": "dpm-consulting-senegal", "name": "DPM CONSULTING SENEGAL", "authorized": true, "logo": "", "sector": "", "service": "", "objectives": "", "work": "", "outcomes": "", "testimonial": "", "testimonial_author": ""},
-  {"id": "n2m-electronics", "name": "N2M ELECTRONICS", "authorized": true, "logo": "", "sector": "", "service": "", "objectives": "", "work": "", "outcomes": "", "testimonial": "", "testimonial_author": ""},
-  {"id": "pro-ingenierie-tech", "name": "PRO Ingénierie TECH", "authorized": true, "logo": "", "sector": "", "service": "", "objectives": "", "work": "", "outcomes": "", "testimonial": "", "testimonial_author": ""}
+  {"id": "dpm-consulting-senegal", "name": "DPM CONSULTING SENEGAL", "authorized": true, "logo": "dpm-consulting.png", "sector": "", "service": "", "objectives": "", "work": "", "outcomes": "", "testimonial": "", "testimonial_author": ""},
+  {"id": "n2m-electronics", "name": "N2M ELECTRONICS", "authorized": true, "logo": "n2m-electronics.png", "sector": "", "service": "", "objectives": "", "work": "", "outcomes": "", "testimonial": "", "testimonial_author": ""},
+  {"id": "pro-ingenierie-tech", "name": "PRO Ingénierie TECH", "authorized": true, "logo": "pro-ingenierie-tech.png", "sector": "", "service": "", "objectives": "", "work": "", "outcomes": "", "testimonial": "", "testimonial_author": ""}
 ]
