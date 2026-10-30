@@ -218,18 +218,20 @@ def case_card(c):
 # ---------- testimonials (real messages only; see testimonials.json) ----------
 TCAT = {"candidat": ("Candidats", "user"), "entreprise": ("Entreprises & clients", "brief")}
 def testi_card(t):
-    who = t["author"] if t.get("identity_authorized") and t.get("author") else t["label"]
-    sub = " · ".join(x for x in [t.get("role") if t.get("identity_authorized") else "", t.get("channel", ""), t.get("date", "")] if x)
+    named = t.get("identity_authorized") and t.get("author")
+    sub = " · ".join(x for x in [t.get("role") if named else "", t.get("channel", ""), t.get("date", "")] if x)
     mt = "".join(f'<li><b>{e(m["value"])}</b> {e(m["label"])}</li>' for m in t.get("metrics", []))
-    mt = f'<ul class="t-metrics" aria-label="{e(t.get("metrics_source",""))}">{mt}</ul>' if mt else ""
+    mt = f'<div class="t-stats"><ul class="t-metrics">{mt}</ul><p class="t-stats-src">{e(t.get("metrics_source",""))}</p></div>' if mt else ""
     did = f'temoignage-{t["id"]}'
     dlg = f'''<dialog class="proof-dlg" id="{did}" aria-labelledby="{did}-t"><div class="proof-dlg-in"><div class="proof-dlg-h"><p id="{did}-t">Témoignage original · {e(t["label"])}</p><button type="button" class="proof-close" data-close aria-label="Fermer">{ic("close")}</button></div>
 <img src="{e(t["capture"])}" width="{t["capture_w"]}" height="{t["capture_h"]}" alt="Capture du témoignage : {e(t["excerpt"])}" loading="lazy" decoding="async"><p class="m-src">{e(t.get("capture_note",""))}</p></div></dialog>'''
     cat, icn = TCAT[t["category"]]
+    intent = t.get("outcome_type") == "intent"   # a stated intention (e.g. coming back) is not shown as a result
+    out = f'<div class="t-out{" t-out--intent" if intent else ""}"><span class="t-out-ic">{ic("star" if intent else "check")}</span><div><p class="t-out-k">{"Fidélisation" if intent else "Résultat"}</p><p class="t-out-v">{e(t["outcome"])}</p></div></div>' if t.get("outcome") else ""
     return f'''<li class="tcard tcard--{t["category"]} reveal" data-cat="{t["category"]}"><figure><span class="t-badge">{ic(icn)} {e(t["label"])}</span>
-<span class="t-mark" aria-hidden="true">“</span><blockquote><p>{e(t["excerpt"])}</p></blockquote><p class="t-ex">Extrait fidèle du message original</p>
-{f'<p class="t-out">{ic("check")}<span>{e(t["outcome"])}</span></p>' if t.get("outcome") else ""}{mt}
-<figcaption><span><b>{e(who)}</b>{f"<small>{e(sub)}</small>" if sub else ""}</span><a class="textlink" href="{e(t["capture"])}" target="_blank" rel="noopener" data-dialog="{did}">Voir le témoignage original {ic("arrow")}</a></figcaption></figure>{dlg}</li>'''
+<span class="t-mark" aria-hidden="true">“</span><blockquote id="{did}-q"><p>{e(t["excerpt"])}</p></blockquote><button type="button" class="t-more" aria-expanded="false" aria-controls="{did}-q" hidden>Lire la suite</button>
+{out}{mt}
+<figcaption>{f'<span class="t-who"><b>{e(t["author"])}</b></span>' if named else ""}<span class="t-meta">Extrait fidèle{f" · {e(sub)}" if sub else ""}</span><a class="textlink" href="{e(t["capture"])}" target="_blank" rel="noopener" data-dialog="{did}">Voir le témoignage original {ic("arrow")}</a></figcaption></figure>{dlg}</li>'''
 def testimonials():
     if not TESTIS: return ""
     ca = [t for t in TESTIS if t["category"] == "candidat"]; en = [t for t in TESTIS if t["category"] != "candidat"]

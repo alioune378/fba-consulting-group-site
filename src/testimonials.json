@@ -15,7 +15,8 @@
     "capture_w": 699,
     "capture_h": 915,
     "capture_note": "Capture anonymisée : nom de l’auteur et de l’entreprise masqués. Propos non modifiés.",
-    "metrics": []
+    "metrics": [],
+    "outcome_type": "result"
   },
   {
     "id": "candidat-cv-partage",
@@ -47,7 +48,8 @@
         "label": "commentaires"
       }
     ],
-    "metrics_source": "Statistiques de la publication LinkedIn (capture)"
+    "metrics_source": "Statistiques de la publication LinkedIn de Fatoumata Ba relayant ce message (capture)",
+    "outcome_type": "result"
   },
   {
     "id": "entreprise-offres",
@@ -75,7 +77,8 @@
         "label": "commentaires"
       }
     ],
-    "metrics_source": "Statistiques de la publication LinkedIn (capture)"
+    "metrics_source": "Statistiques de la publication LinkedIn de Fatoumata Ba relayant ce message (capture)",
+    "outcome_type": "intent"
   },
   {
     "id": "client-collaborations",
@@ -93,7 +96,8 @@
     "capture_w": 1080,
     "capture_h": 418,
     "capture_note": "Capture anonymisée : nom et photo masqués. Propos non modifiés.",
-    "metrics": []
+    "metrics": [],
+    "outcome_type": "intent"
   },
   {
     "id": "client-contenu",
@@ -111,7 +115,8 @@
     "capture_w": 1080,
     "capture_h": 570,
     "capture_note": "Capture anonymisée : nom et photo masqués. Propos non modifiés.",
-    "metrics": []
+    "metrics": [],
+    "outcome_type": "result"
   },
   {
     "id": "client-inscrits",
@@ -129,6 +134,7 @@
     "capture_w": 1080,
     "capture_h": 595,
     "capture_note": "Capture anonymisée : nom et photo masqués. Propos non modifiés (seuls les accents manquants ont été rétablis dans l’extrait).",
-    "metrics": []
+    "metrics": [],
+    "outcome_type": "result"
   }
 ]
