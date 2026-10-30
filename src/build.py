@@ -76,7 +76,7 @@ def page(fn, title, desc, body, og_title=None):
 <meta property="og:type" content="website"><meta property="og:locale" content="fr_FR"><meta property="og:title" content="{e(og_title or title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:site_name" content="{e(S["name"])}">
 <meta name="theme-color" content="#0B2D5B"><link rel="icon" href="img/favicon.png" type="image/png"><link rel="apple-touch-icon" href="img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/style.css?v={V["style.css"]}"><script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script></head>
 <body data-wa="{e(WA)}"><a class="skip" href="#main">Aller au contenu</a>
 <header class="header"><div class="wrap bar"><a class="brand" href="index.html" aria-label="FBA Consulting Group, accueil"><img src="img/fba-logo-420.webp" width="420" height="121" alt="FBA Consulting Group"></a>

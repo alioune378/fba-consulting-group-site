@@ -1,5 +1,5 @@
 :root{--navy:#0B2D5B;--navy-d:#07203f;--blue:#1E6BB8;--silver:#A7AEB8;--off:#F4F6F8;--ink:#14233a;--soft:#4a5a70;--line:rgba(11,45,91,.12);--wa:#1f9d55;
---serif:"Fraunces","Georgia","Times New Roman",serif;--sans:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;--r:10px;--wrap:1160px;--g:max(20px,env(safe-area-inset-left))}
+--serif:"Source Serif 4","Georgia","Times New Roman",serif;--sans:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;--r:10px;--wrap:1160px;--g:max(20px,env(safe-area-inset-left))}
 *,*::before,*::after{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
 body{margin:0;background:#fff;color:var(--soft);font:400 1.02rem/1.7 var(--sans);overflow-x:hidden}
 @view-transition{navigation:auto}
@@ -151,3 +151,5 @@ p{margin:0 0 1em}.wrap{width:100%;max-width:var(--wrap);margin-inline:auto;paddi
 .two-c{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,64px)}@media(max-width:860px){.two-c{grid-template-columns:1fr}}
 .fine-l{margin-top:16px;font-size:.9rem;color:#5d6d82}.steps--lg{padding-left:22px;margin:0 0 20px;font-size:1rem}.steps--lg li{margin-bottom:8px}.hint{font-size:.85rem;color:#66758a;margin:0}
 .footer .f-brand p{max-width:34ch}
+
+h1,h2{letter-spacing:-.005em}.stat b{font-weight:600}
