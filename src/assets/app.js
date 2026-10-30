@@ -30,6 +30,8 @@ var wf=$('.wa-float');if(wf&&'IntersectionObserver' in window){var seen=new Set(
 /* proof lightbox (falls back to opening the image) */
 $$('[data-dialog]').forEach(function(a){var dl=d.getElementById(a.dataset.dialog);if(!dl||!dl.showModal)return;a.addEventListener('click',function(ev){ev.preventDefault();dl.showModal()})});
 $$('dialog').forEach(function(dl){dl.addEventListener('click',function(ev){if(ev.target===dl||ev.target.closest('[data-close]'))dl.close()})});
+/* testimonial filters */
+$$('.tfilters').forEach(function(g){var bs=$$('.tf',g),cards=$$('.tcard',g.parentNode);bs.forEach(function(bt){bt.addEventListener('click',function(){var v=bt.dataset.filter;bs.forEach(function(x){var on=x===bt;x.classList.toggle('is-on',on);x.setAttribute('aria-pressed',on)});cards.forEach(function(c){c.classList.toggle('is-hidden',v!=='all'&&c.dataset.cat!==v)})})})});
 /* forms */
 var qs=new URLSearchParams(location.search),svc=qs.get('service');if(svc){var sel=$('#d-svc');if(sel)for(var i=0;i<sel.options.length;i++)if(sel.options[i].text===svc)sel.selectedIndex=i}
 $$('form.form').forEach(function(f){

@@ -42,3 +42,8 @@
 - [ ] Parcours de la fondatrice (formation, expériences, dates) → `founder_bio`. La mention « professionnelle de la communication » est à confirmer par Fatoumata.
 - [ ] Au lancement : `draft_placeholders` → false (retire tous les cadres « à fournir »).
 - [ ] Illustrations des trois expertises : SVG originaux. Option : remplacer par des photos commandées (pas de banque d'images générique).
+
+## Témoignages (ajouté le 30/10/2026)
+- [ ] 3 témoignages publiés en version anonyme (noms et entreprise masqués). Obtenir l'accord des auteurs pour afficher leur nom (`identity_authorized`).
+- [ ] Témoignage entreprise : seule la fin du message figure sur la capture. Fournir la capture complète (début du message) pour pouvoir citer la partie sur les candidats.
+- [ ] Captures originales non anonymisées : ne pas les publier.

@@ -358,3 +358,38 @@ body.nav-open .wa-float{opacity:0;pointer-events:none}
 @media(min-width:900px){.bcards{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .influence+.cta{border-top:1px solid var(--line-ink)}
 .proof .textlink{color:var(--navy)}
+
+/* ===== Testimonials (2.2) ===== */
+.tcards{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.tcard figure{position:relative;height:100%;margin:0;display:flex;flex-direction:column;gap:14px;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:26px 22px 22px;overflow:hidden;transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .3s}
+.tcard figure::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--gold)}
+.tcard--entreprise figure{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.tcard--entreprise figure::before{background:linear-gradient(var(--gold-l),var(--gold))}
+.tcard figure:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:rgba(201,169,110,.55)}
+.t-badge{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;font:600 .68rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-d);background:var(--gold-xl);border-radius:999px;padding:8px 12px}
+.t-badge .ic{width:14px;height:14px}
+.tcard--entreprise .t-badge{background:rgba(230,211,168,.12);color:var(--gold-l);border:1px solid rgba(230,211,168,.3)}
+.t-mark{position:absolute;top:2px;right:18px;font:600 7rem/1 var(--serif);color:var(--gold);opacity:.22;pointer-events:none}
+.tcard blockquote{margin:0}.tcard blockquote p{margin:0;font:500 1.12rem/1.55 var(--serif);color:var(--navy);font-style:italic}
+.tcard--entreprise blockquote p{color:#fff}
+.t-ex{margin:-6px 0 0;font-size:.74rem;letter-spacing:.02em;color:var(--mute)}.tcard--entreprise .t-ex{color:var(--on-ink-2)}
+.t-out{display:flex;gap:10px;align-items:flex-start;margin:0;padding:12px 14px;border-radius:12px;background:var(--ivory);color:var(--text);font-weight:500;font-size:.92rem;line-height:1.45}
+.t-out .ic{width:18px;height:18px;color:var(--gold-d);margin-top:1px}
+.tcard--entreprise .t-out{background:rgba(255,255,255,.06);color:#fff}.tcard--entreprise .t-out .ic{color:var(--gold-l)}
+.t-metrics{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.82rem;color:var(--mute)}
+.t-metrics b{font:600 1.05rem/1 var(--serif);color:var(--navy)}
+.tcard--entreprise .t-metrics{color:var(--on-ink-2)}.tcard--entreprise .t-metrics b{color:var(--gold-l)}
+.tcard figcaption{margin-top:auto;display:flex;flex-direction:column;gap:12px;padding-top:16px;border-top:1px solid var(--line)}
+.tcard--entreprise figcaption{border-color:var(--line-ink)}
+.tcard figcaption>span{display:grid;gap:2px}.tcard figcaption b{color:var(--text);font-weight:600}.tcard figcaption small{font-size:.8rem;color:var(--mute)}
+.tcard--entreprise figcaption b{color:#fff}.tcard--entreprise figcaption small{color:var(--on-ink-2)}
+.tcard--entreprise .textlink{color:var(--gold-l)}
+.tcard.is-hidden{display:none}
+.tfilters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
+.tf{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--navy);font:600 .9rem/1 var(--sans);cursor:pointer;transition:background-color .2s,color .2s,border-color .2s}
+.tf.is-on{background:var(--navy);border-color:var(--navy);color:#fff}
+.t-cta{display:grid;gap:12px;margin-top:28px}
+.testis .fine-l{max-width:80ch}
+@media(min-width:560px){.t-cta{display:flex;flex-wrap:wrap}}
+@media(min-width:760px){.tcards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1080px){.tcards{grid-template-columns:repeat(3,minmax(0,1fr))}}

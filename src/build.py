@@ -9,6 +9,7 @@ def load(n): return json.loads((SRC / n).read_text(encoding="utf-8"))
 S = load("site.json"); CLIENTS = load("clients.json"); CASES = load("cases.json")
 POSTS = [p for p in load("posts.json") if p.get("url")]
 TALENTS = [t for t in load("talents.json") if t.get("approved")]
+TESTIS = [t for t in load("testimonials.json") if t.get("published")]
 e = lambda s: html.escape(str(s), quote=True)
 FLAGS = S["review_flags"]
 DRAFT = S.get("draft_placeholders", False)        # internal draft: show labelled placeholders where material is missing
@@ -214,6 +215,34 @@ def case_card(c):
     links = "".join(f'<li><a href="{e(l["url"])}" target="_blank" rel="noopener noreferrer">{e(l["label"])}</a></li>' for l in c.get("links", []))
     return f'<article class="case reveal"><h3>{e(c["title"])}</h3>{f"<p class=muted>{e(c["sector"])}</p>" if c.get("sector") else ""}<dl class="kvs">{sec("objective","Objectif de communication")}{sec("strategy","Stratégie mise en œuvre")}{sec("results","Résultats")}</dl>{f"<div class=cimgs>{imgs}</div>" if imgs else ""}{f"<ul class=clinks>{links}</ul>" if links else ""}</article>'
 
+# ---------- testimonials (real messages only; see testimonials.json) ----------
+TCAT = {"candidat": ("Candidats", "user"), "entreprise": ("Entreprises", "brief")}
+def testi_card(t):
+    who = t["author"] if t.get("identity_authorized") and t.get("author") else t["label"]
+    sub = " · ".join(x for x in [t.get("role") if t.get("identity_authorized") else "", t.get("channel", ""), t.get("date", "")] if x)
+    mt = "".join(f'<li><b>{e(m["value"])}</b> {e(m["label"])}</li>' for m in t.get("metrics", []))
+    mt = f'<ul class="t-metrics" aria-label="{e(t.get("metrics_source",""))}">{mt}</ul>' if mt else ""
+    did = f'temoignage-{t["id"]}'
+    dlg = f'''<dialog class="proof-dlg" id="{did}" aria-labelledby="{did}-t"><div class="proof-dlg-in"><div class="proof-dlg-h"><p id="{did}-t">Témoignage original · {e(t["label"])}</p><button type="button" class="proof-close" data-close aria-label="Fermer">{ic("close")}</button></div>
+<img src="{e(t["capture"])}" width="{t["capture_w"]}" height="{t["capture_h"]}" alt="Capture du témoignage : {e(t["excerpt"])}" loading="lazy" decoding="async"><p class="m-src">{e(t.get("capture_note",""))}</p></div></dialog>'''
+    cat, icn = TCAT[t["category"]]
+    return f'''<li class="tcard tcard--{t["category"]} reveal" data-cat="{t["category"]}"><figure><span class="t-badge">{ic(icn)} {e(t["label"])}</span>
+<span class="t-mark" aria-hidden="true">“</span><blockquote><p>{e(t["excerpt"])}</p></blockquote><p class="t-ex">Extrait fidèle du message original</p>
+{f'<p class="t-out">{ic("check")}<span>{e(t["outcome"])}</span></p>' if t.get("outcome") else ""}{mt}
+<figcaption><span><b>{e(who)}</b>{f"<small>{e(sub)}</small>" if sub else ""}</span><a class="textlink" href="{e(t["capture"])}" target="_blank" rel="noopener" data-dialog="{did}">Voir le témoignage original {ic("arrow")}</a></figcaption></figure>{dlg}</li>'''
+def testimonials():
+    if not TESTIS: return ""
+    order = sorted(TESTIS, key=lambda t: t["category"] != "candidat")
+    cats = {t["category"] for t in TESTIS}
+    filt = ""
+    if len(TESTIS) >= 6 and len(cats) > 1:
+        btn = lambda v, l, on=False: f'<button type="button" class="tf{" is-on" if on else ""}" data-filter="{v}" aria-pressed="{str(on).lower()}">{l}</button>'
+        filt = f'<div class="tfilters reveal" role="group" aria-label="Filtrer les témoignages">{btn("all","Tous",True)}{btn("candidat","Candidats")}{btn("entreprise","Entreprises")}</div>'
+    return f'''<section class="band band--ivory testis" id="temoignages"><div class="wrap">{shead("Témoignages", "Ils nous ont fait confiance. Voici leurs résultats.", "Derrière chaque opportunité se trouvent des parcours, des rencontres et des réussites. Découvrez les retours de ceux que nous avons accompagnés.")}
+{filt}<ul class="tcards">{"".join(testi_card(t) for t in order)}</ul>
+<div class="t-cta reveal"><a class="btn btn--navy btn--lg" href="emploi-talents.html#candidature">{ic("user")} Je recherche un emploi</a><a class="btn btn--outline btn--lg" href="emploi-talents.html#recruteurs">{ic("brief")} Je souhaite recruter</a></div>
+<p class="fine-l reveal">Messages reçus par Fatoumata Ba, présentés en extraits sans modification des propos. Les noms sont masqués faute d’autorisation de publication. Chaque parcours est unique : aucun résultat n’est garanti.</p></div></section>'''
+
 # ---------- emploi & talents ----------
 OFFERS = [
  ("search", "Visibilité des candidats", "Votre profil présenté à une communauté professionnelle, uniquement après votre accord écrit sur le contenu."),
@@ -282,7 +311,7 @@ def home():
     aud = "".join(f'<li class="reveal"><a class="aud" href="{h}"><span>{e(t)}</span><b>{e(c)} {ic("arrow")}</b></a></li>' for t, c, h in AUDIENCES)
     testi = [c for c in CLIENTS if c["authorized"] and c.get("testimonial") and c.get("testimonial_author")]
     tblk = f'''<section class="band band--ivory"><div class="wrap">{shead("Témoignages", "Ce que disent nos clients")}<div class="grid g2">{"".join(f'<figure class="quote reveal"><blockquote>“{e(c["testimonial"])}”</blockquote><figcaption>{e(c["testimonial_author"])} · {e(c["name"])}</figcaption></figure>' for c in testi)}</div></div></section>''' if testi else ""
-    return f'''{hero()}{metrics()}{benefits_for()}{pillars()}{influence()}{clients_section()}{emploi_band()}{talents_spotlight()}{founder_story()}{tblk}{cta_block()}'''
+    return f'''{hero()}{metrics()}{benefits_for()}{pillars()}{clients_section()}{testimonials()}{influence()}{emploi_band()}{talents_spotlight()}{founder_story()}{tblk}{cta_block()}'''
 
 def about():
     return head("À propos", "Une voix, une audience, une mission.", "FBA Consulting Group aide les entreprises, les entrepreneurs et les professionnels à gagner en visibilité, à renforcer leur image et à promouvoir leurs projets.") + founder_story(full=True) + metrics() + f'''
@@ -301,7 +330,7 @@ def services():
 def realisations():
     refs = "".join(client_card(c) for c in CLIENTS if client_visible(c))
     cases = "".join(case_card(c) for c in CASES)
-    body = head("Réalisations & Impact", "Une influence mesurée, des références réelles.", "Audience, publications et références clients de FBA Consulting Group.") + clients_section(link=False) + metrics()
+    body = head("Réalisations & Impact", "Une influence mesurée, des références réelles.", "Audience, publications et références clients de FBA Consulting Group.") + clients_section(link=False) + testimonials() + metrics()
     if refs: body += f'<section class="band" id="references"><div class="wrap">{shead("Références clients", "Collaborations")}<div class="rlist">{refs}</div></div></section>'
     if cases: body += f'<section class="band" id="etudes"><div class="wrap">{shead("Études de cas", "Projets et résultats")}<div class="cases">{cases}</div></div></section>'
     else: body += f'<section class="band"><div class="wrap narrow center-h reveal"><p class="eyebrow">Études de cas</p><h2>Études de cas à venir</h2><p class="lede">Nous publierons prochainement des projets détaillés, avec l’accord de nos clients. En attendant, parlons du vôtre.</p></div></section>'
@@ -352,7 +381,7 @@ def emploi():
 <figure class="phero-art"><img src="img/pillar-emploi.svg" width="800" height="600" alt="" fetchpriority="high"></figure></div></section>
 <section class="band"><div class="wrap">{shead("Ce que nous faisons", "Quatre leviers pour être remarqué.")}{offers_list("offers--4")}<p class="fine-l reveal">{e(DISCLAIM)}</p></div></section>
 <section class="band band--ink"><div class="wrap two-c">{shead("Comment ça se passe", "Un parcours simple, à votre rythme.", "Vous gardez la main à chaque étape.", dark=True)}<ol class="timeline">{stp}</ol></div></section>
-{talents_spotlight()}
+{talents_spotlight()}{testimonials()}
 <section class="band band--sand"><div class="wrap">{shead("Deux parcours", "Candidat ou recruteur ?", cls="center-h")}{pathways()}</div></section>
 <section class="band band--ivory" id="candidature"><div class="wrap narrow">{shead("Candidature", "Faire connaître mon profil", "Quelques minutes suffisent. Nous revenons vers vous après examen de votre profil.")}
 <form class="form reveal" name="candidature" method="POST" data-netlify="true" netlify-honeypot="bot-field"{enc} data-mode="{mode}" novalidate>{common("candidature")}
