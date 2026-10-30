@@ -4,7 +4,7 @@
 - [x] Abonnés LinkedIn : profil affiché à 83 214 abonnés le 30/10/2026 → le site indique « +83 000 ».
 - [x] Impressions : 29 010 495 sur 365 jours, +323 % vs les 365 jours précédents (capture LinkedIn envoyée par Fatoumata le 30/10/2026, conservée dans `src/img/preuves/`). Le site affiche « +29 M impressions en 365 jours ». Mettre à jour `stats` dans `src/site.json` et la capture à chaque nouveau relevé.
 - [ ] Ne pas publier « Top 1 % Sénégal » / « Top 3 Sénégal » (deux classements différents sur son profil et sa bannière, non vérifiables).
-- [ ] Autorisation écrite de chaque client (nom + logo) : N2M SÉCURITÉ, NVI FACILITY, DPM CONSULTING SENEGAL, N2M ELECTRONICS, PRO Ingénierie TECH. Rien n'est publié tant que `authorized` = false dans `src/clients.json`.
+- [x] Autorisation de chaque client confirmée (30/10/2026, via Fatoumata Ba) (nom + logo) : N2M SÉCURITÉ, NVI FACILITY, DPM CONSULTING SENEGAL, N2M ELECTRONICS, PRO Ingénierie TECH. Rien n'est publié tant que `authorized` = false dans `src/clients.json`.
 - [ ] Logos originaux des 5 clients (fichiers non modifiés) → `src/img/clients/`.
 - [ ] Les 6 catégories de clients et les formulations « Pourquoi FBA ».
 - [ ] Biographie / parcours (la mention « parmi les profils les plus visibles du Sénégal » n'est PAS publiée tant qu'elle n'est pas vérifiable).
