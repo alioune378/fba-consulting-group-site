@@ -34,7 +34,7 @@ $$('form.form').forEach(function(f){
    else if(el.type==='email'&&v&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v))msg='Adresse e-mail invalide.';
    else if(el.type==='tel'&&v&&v.replace(/\D/g,'').length<8)msg='Numéro invalide (8 chiffres minimum).';
    else if(el.minLength>0&&v&&v.length<el.minLength)msg='Merci de détailler un peu plus ('+el.minLength+' caractères minimum).';
-   else if(el.type==='file'&&el.files&&el.files[0]){var fl=el.files[0],okx=/\.(pdf|docx?)$/i.test(fl.name);if(!okx)msg='Format accepté : PDF, DOC ou DOCX.';else if(fl.size>(+el.dataset.max||5242880))msg='Fichier trop volumineux (5 Mo maximum).'}
+   else if(el.type==='file'&&el.files&&el.files[0]){var fl=el.files[0],okx=/\.(pdf|docx?)$/i.test(fl.name);if(!okx)msg='Format accepté : PDF, DOC ou DOCX.';else if(fl.size>(+el.dataset.max||7340032))msg='Fichier trop volumineux (7 Mo maximum).'}
    if(msg){ok=false;bad(el,msg);if(!first)first=el}});
   if(!ok){st.className='status bad';st.textContent='Veuillez corriger les champs signalés.';first.focus();return}
   if($('[name=bot-field]',f).value||Date.now()-(+t.value)<2500){st.className='status ok';st.textContent='Merci.';return}

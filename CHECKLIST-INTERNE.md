@@ -25,7 +25,7 @@
 ## Emploi & Talents (nouveau)
 - [ ] Fatoumata valide l'offre : révision de CV, optimisation LinkedIn, préparation aux entretiens, visibilité des profils approuvés (les 6 bénéfices affichés).
 - [ ] Confirmer le statut : le site se présente comme « mise en visibilité et réseautage professionnel », sans promesse d'embauche et sans se dire agence de recrutement agréée.
-- [ ] Téléversement de CV DÉSACTIVÉ (`cv_upload: false` dans `src/site.json`). Le code est prêt (PDF/DOC/DOCX, 5 Mo, consentement séparé). Avant de l'activer : vérifier sur Netlify que les fichiers ne sont accessibles qu'avec le compte administrateur (jamais par URL publique) et ajouter un contrôle serveur du type de fichier. Tant que ce n'est pas validé, ne pas activer.
+- [ ] Téléversement de CV DÉSACTIVÉ (`cv_upload: false` dans `src/site.json`). Le code est prêt (PDF/DOC/DOCX, 7 Mo, consentement séparé). Avant de l'activer : vérifier sur Netlify que les fichiers ne sont accessibles qu'avec le compte administrateur (jamais par URL publique) et ajouter un contrôle serveur du type de fichier. Tant que ce n'est pas validé, ne pas activer.
 - [ ] Après le premier déploiement : tester les 3 formulaires `candidature`, `recruteur`, `demande`, `rendez-vous` ; activer les notifications e-mail Netlify.
 - [ ] L'URL `/emploi-talents` est redirigée par `netlify.toml` : vérifier sur le site en ligne.
 - [ ] « Des talents mis en lumière » : masqué tant que `src/talents.json` est vide. N'y ajouter que des cas approuvés par écrit (`"approved": true`).
