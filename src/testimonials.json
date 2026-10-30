@@ -112,5 +112,23 @@
     "capture_h": 570,
     "capture_note": "Capture anonymisée : nom et photo masqués. Propos non modifiés.",
     "metrics": []
+  },
+  {
+    "id": "client-inscrits",
+    "category": "entreprise",
+    "published": true,
+    "identity_authorized": false,
+    "label": "Client",
+    "author": "",
+    "role": "",
+    "outcome": "Constate une hausse des inscrits sur sa plateforme et de ses abonnés LinkedIn",
+    "excerpt": "Oui petit à petit je vois que le nombre d’inscrits sur la plateforme commencent à augmenter grâce aux pub, de même que les abonnés LinkedIn aussi.",
+    "channel": "Message LinkedIn",
+    "date": "",
+    "capture": "img/temoignages/client-inscrits.webp",
+    "capture_w": 1080,
+    "capture_h": 595,
+    "capture_note": "Capture anonymisée : nom et photo masqués. Propos non modifiés (seuls les accents manquants ont été rétablis dans l’extrait).",
+    "metrics": []
   }
 ]
