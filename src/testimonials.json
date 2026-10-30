@@ -12,7 +12,8 @@
     "channel": "Message LinkedIn",
     "date": "",
     "capture": "img/temoignages/candidat-assistant-administratif.webp",
-    "capture_w": 699, "capture_h": 915,
+    "capture_w": 699,
+    "capture_h": 915,
     "capture_note": "Capture anonymisée : nom de l’auteur et de l’entreprise masqués. Propos non modifiés.",
     "metrics": []
   },
@@ -29,9 +30,23 @@
     "channel": "Message partagé sur LinkedIn par Fatoumata Ba",
     "date": "",
     "capture": "img/temoignages/candidat-cv-partage.webp",
-    "capture_w": 920, "capture_h": 1080,
+    "capture_w": 920,
+    "capture_h": 1080,
     "capture_note": "Capture originale de la publication. Aucun nom n’y figure.",
-    "metrics": [{"value": "20 886", "label": "impressions"}, {"value": "601", "label": "réactions"}, {"value": "32", "label": "commentaires"}],
+    "metrics": [
+      {
+        "value": "20 886",
+        "label": "impressions"
+      },
+      {
+        "value": "601",
+        "label": "réactions"
+      },
+      {
+        "value": "32",
+        "label": "commentaires"
+      }
+    ],
     "metrics_source": "Statistiques de la publication LinkedIn (capture)"
   },
   {
@@ -47,9 +62,55 @@
     "channel": "Message partagé sur LinkedIn par Fatoumata Ba",
     "date": "",
     "capture": "img/temoignages/entreprise-offres.webp",
-    "capture_w": 839, "capture_h": 741,
+    "capture_w": 839,
+    "capture_h": 741,
     "capture_note": "Fin du message uniquement : le début ne figure pas sur la capture fournie.",
-    "metrics": [{"value": "177", "label": "réactions"}, {"value": "7", "label": "commentaires"}],
+    "metrics": [
+      {
+        "value": "177",
+        "label": "réactions"
+      },
+      {
+        "value": "7",
+        "label": "commentaires"
+      }
+    ],
     "metrics_source": "Statistiques de la publication LinkedIn (capture)"
+  },
+  {
+    "id": "client-collaborations",
+    "category": "entreprise",
+    "published": true,
+    "identity_authorized": false,
+    "label": "Client",
+    "author": "",
+    "role": "",
+    "outcome": "Souhaite renouveler la collaboration",
+    "excerpt": "Merci pour ce travail remarquable Fatoumata, je ne manquerai pas de revenir vers vous pour d’autres collaborations.",
+    "channel": "Message LinkedIn",
+    "date": "",
+    "capture": "img/temoignages/client-collaborations.webp",
+    "capture_w": 1080,
+    "capture_h": 418,
+    "capture_note": "Capture anonymisée : nom et photo masqués. Propos non modifiés.",
+    "metrics": []
+  },
+  {
+    "id": "client-contenu",
+    "category": "entreprise",
+    "published": true,
+    "identity_authorized": false,
+    "label": "Client",
+    "author": "",
+    "role": "",
+    "outcome": "",
+    "excerpt": "J’ai vu le contenu, c’est bien fait et on aura des bons résultats. Merci beaucoup.",
+    "channel": "Message LinkedIn",
+    "date": "",
+    "capture": "img/temoignages/client-contenu.webp",
+    "capture_w": 1080,
+    "capture_h": 570,
+    "capture_note": "Capture anonymisée : nom et photo masqués. Propos non modifiés.",
+    "metrics": []
   }
 ]

@@ -216,7 +216,7 @@ def case_card(c):
     return f'<article class="case reveal"><h3>{e(c["title"])}</h3>{f"<p class=muted>{e(c["sector"])}</p>" if c.get("sector") else ""}<dl class="kvs">{sec("objective","Objectif de communication")}{sec("strategy","Stratégie mise en œuvre")}{sec("results","Résultats")}</dl>{f"<div class=cimgs>{imgs}</div>" if imgs else ""}{f"<ul class=clinks>{links}</ul>" if links else ""}</article>'
 
 # ---------- testimonials (real messages only; see testimonials.json) ----------
-TCAT = {"candidat": ("Candidats", "user"), "entreprise": ("Entreprises", "brief")}
+TCAT = {"candidat": ("Candidats", "user"), "entreprise": ("Entreprises & clients", "brief")}
 def testi_card(t):
     who = t["author"] if t.get("identity_authorized") and t.get("author") else t["label"]
     sub = " · ".join(x for x in [t.get("role") if t.get("identity_authorized") else "", t.get("channel", ""), t.get("date", "")] if x)
@@ -232,12 +232,13 @@ def testi_card(t):
 <figcaption><span><b>{e(who)}</b>{f"<small>{e(sub)}</small>" if sub else ""}</span><a class="textlink" href="{e(t["capture"])}" target="_blank" rel="noopener" data-dialog="{did}">Voir le témoignage original {ic("arrow")}</a></figcaption></figure>{dlg}</li>'''
 def testimonials():
     if not TESTIS: return ""
-    order = sorted(TESTIS, key=lambda t: t["category"] != "candidat")
+    ca = [t for t in TESTIS if t["category"] == "candidat"]; en = [t for t in TESTIS if t["category"] != "candidat"]
+    order = [x for pair in zip(ca, en) for x in pair] + ca[len(en):] + en[len(ca):]   # alternate candidates / companies
     cats = {t["category"] for t in TESTIS}
     filt = ""
     if len(TESTIS) >= 6 and len(cats) > 1:
         btn = lambda v, l, on=False: f'<button type="button" class="tf{" is-on" if on else ""}" data-filter="{v}" aria-pressed="{str(on).lower()}">{l}</button>'
-        filt = f'<div class="tfilters reveal" role="group" aria-label="Filtrer les témoignages">{btn("all","Tous",True)}{btn("candidat","Candidats")}{btn("entreprise","Entreprises")}</div>'
+        filt = f'<div class="tfilters reveal" role="group" aria-label="Filtrer les témoignages">{btn("all","Tous",True)}{btn("candidat","Candidats")}{btn("entreprise","Entreprises & clients")}</div>'
     return f'''<section class="band band--ivory testis" id="temoignages"><div class="wrap">{shead("Témoignages", "Ils nous ont fait confiance. Voici leurs résultats.", "Derrière chaque opportunité se trouvent des parcours, des rencontres et des réussites. Découvrez les retours de ceux que nous avons accompagnés.")}
 {filt}<ul class="tcards">{"".join(testi_card(t) for t in order)}</ul>
 <div class="t-cta reveal"><a class="btn btn--navy btn--lg" href="emploi-talents.html#candidature">{ic("user")} Je recherche un emploi</a><a class="btn btn--outline btn--lg" href="emploi-talents.html#recruteurs">{ic("brief")} Je souhaite recruter</a></div>
