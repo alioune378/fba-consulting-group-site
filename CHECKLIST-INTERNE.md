@@ -16,7 +16,7 @@
 ## Configuration technique
 - [x] Netlify Forms activé le 30/10/2026. [ ] Activer les notifications e-mail (formulaires `demande` et `rendez-vous`).
 - [ ] Envoyer une demande réelle de chaque formulaire et vérifier la réception.
-- [ ] Tester le lien WhatsApp sur un téléphone avec WhatsApp installé (+221 77 641 78 41).
+- [ ] Tester le lien WhatsApp sur un téléphone avec WhatsApp installé (+221 78 834 72 72, numéro professionnel ; l'ancien numéro était personnel, retiré le 31/10/2026).
 - [ ] Option : `booking_url` (Calendly, Cal.com…) pour un vrai agenda.
 - [ ] Domaine : renseigner `domain`, retirer `noindex` et `Disallow` (robots) au lancement.
 - [ ] Remplacer les logos FBA (recadrages raster) par les fichiers vectoriels d'origine.
