@@ -2,7 +2,7 @@
   "name": "FBA Consulting Group",
   "tagline": "Visibilité, image professionnelle et promotion de projets",
   "founder": "Fatoumata Ba",
-  "domain": "",
+  "domain": "https://fba-consultinggroup.com",
   "review_flags": false,
   "form_mode": "netlify",
   "whatsapp_number": "221788347272",
@@ -42,7 +42,7 @@
     "asof": "octobre 2026"
   },
   "preview_url": "https://fba-consulting-group-site.netlify.app",
-  "draft_placeholders": true,
+  "draft_placeholders": false,
   "founder_bio": [],
   "founder_parcours": {
     "source": "Profil LinkedIn de Fatoumata Ba, consulté le 30 octobre 2026",

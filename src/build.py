@@ -84,7 +84,7 @@ def page(fn, title, desc, body, og_title=None):
     ld = {"@context": "https://schema.org", "@type": "ProfessionalService", "name": S["name"], "description": S["tagline"], "founder": {"@type": "Person", "name": S["founder"]}, "areaServed": "SN", "telephone": "+" + NUM, "address": {"@type": "PostalAddress", "addressLocality": "Thiès", "addressCountry": "SN"}}
     return f'''<!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>{e(title)}</title><meta name="description" content="{e(desc)}"><meta name="robots" content="noindex, nofollow">{canon}
+<title>{e(title)}</title><meta name="description" content="{e(desc)}">{"" if S["domain"] else '<meta name="robots" content="noindex, nofollow">'}{canon}
 <meta property="og:type" content="website"><meta property="og:locale" content="fr_FR"><meta property="og:title" content="{e(og_title or title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:site_name" content="{e(S["name"])}">{f'<meta property="og:url" content="{e(url)}">' if BASE else ""}{ogimg}
 <meta name="theme-color" content="#071A36"><link rel="icon" href="img/favicon.png" type="image/png"><link rel="apple-touch-icon" href="img/favicon.png">
 <link rel="preload" href="fonts/lora.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="fonts/inter-regular.woff" as="font" type="font/woff" crossorigin>
@@ -458,18 +458,23 @@ shutil.copytree(SRC / "img", DIST / "img")
 shutil.copytree(SRC / "fonts", DIST / "fonts")
 for f in ("style.css", "app.js"): shutil.copy(SRC / "assets" / f, DIST / "assets" / f)
 for fn, (t, d, b) in PAGES.items(): (DIST / fn).write_text(page(fn, t, d, b), encoding="utf-8")
-# Draft: search engines blocked; link-preview bots (WhatsApp, LinkedIn…) allowed so shared links show a card.
-(DIST / "robots.txt").write_text("""# Brouillon : retirer le blocage avant le lancement.
-User-agent: facebookexternalhit
-User-agent: WhatsApp
-User-agent: Facebot
-User-agent: LinkedInBot
-User-agent: Slackbot-LinkExpanding
-User-agent: Twitterbot
-User-agent: TelegramBot
-Allow: /
+if S["domain"]:
+    (DIST / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {S['domain'].rstrip('/')}/sitemap.xml\n")
+    urls = "".join(f"<url><loc>{S['domain'].rstrip('/')}/{'' if fn == 'index.html' else fn}</loc></url>" for fn in PAGES if fn != "404.html")
+    (DIST / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>')
+else:
+    # Draft: search engines blocked; link-preview bots (WhatsApp, LinkedIn…) allowed so shared links show a card.
+    (DIST / "robots.txt").write_text("""# Brouillon : retirer le blocage avant le lancement.
+    User-agent: facebookexternalhit
+    User-agent: WhatsApp
+    User-agent: Facebot
+    User-agent: LinkedInBot
+    User-agent: Slackbot-LinkExpanding
+    User-agent: Twitterbot
+    User-agent: TelegramBot
+    Allow: /
 
-User-agent: *
-Disallow: /
-""")
+    User-agent: *
+    Disallow: /
+    """)
 print(f"Built {len(PAGES)} pages -> {DIST}")
